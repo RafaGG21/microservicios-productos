@@ -17,3 +17,6 @@
 1683991349614	Rename type 'Rol'
 1683991360943	Rename type 'RolDTO'
 1683991370291	Rename type 'Rol'
+1684000973323	Copy compilation unit
+1684000984878	Rename type 'Email'
+1684001604093	Encapsulate field 'tipo'

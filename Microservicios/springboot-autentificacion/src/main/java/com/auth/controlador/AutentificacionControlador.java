@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.auth.servicios.IAutentificationService;
@@ -39,6 +40,16 @@ public class AutentificacionControlador {
 		} else {
 			UsuarioDTO usuarioDevolver = new UsuarioDTO(usuarioGuardado.getEmail(),usuarioGuardado.getNombre(),null);
 			return ResponseEntity.ok().body(usuarioDevolver);
+		}
+	}
+	
+	@GetMapping("/registrado")
+	public ResponseEntity<String> registrado(@RequestBody String nombre) {
+		String email = autentificationService.obtenerEmailPorNombre(nombre);
+		if(email == null) {
+			return ResponseEntity.notFound().build();
+		} else {
+			return ResponseEntity.ok().body(email);
 		}
 	}
 	

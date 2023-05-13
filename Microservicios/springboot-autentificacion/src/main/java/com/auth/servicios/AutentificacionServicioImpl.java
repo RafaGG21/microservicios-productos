@@ -1,7 +1,16 @@
 package com.auth.servicios;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +20,7 @@ import com.commons.entidades.Usuario;
 import com.commons.mapper.GenericMapper;
 
 @Service
-public class AutentificacionServicioImpl implements IAutentificationService {
+public class AutentificacionServicioImpl  implements IAutentificationService, UserDetailsService  {
 
 	@Autowired
 	IAutentificacionRepositorio autentificacionRepositorio;
@@ -30,7 +39,7 @@ public class AutentificacionServicioImpl implements IAutentificationService {
 		try {
 			Usuario usuario = autentificacionRepositorio.encontrarUsuarioPorEmail(email);
 			if (usuario != null && encoder.matches(password, usuario.getPassword())) {
-
+				//List<GrantedAuthority> roles = usuario.getRoles().stream().map(rol -> new SimpleGrantedAuthority(rol.getNombre())).peek(authority -> authority.getAuthority()).collect(Collectors.toList());
 				usuarioDTO = GenericMapper.map(usuario, UsuarioDTO.class);
 			}
 
@@ -40,6 +49,17 @@ public class AutentificacionServicioImpl implements IAutentificationService {
 		return usuarioDTO;
 	}
 
+	@Override
+	public String obtenerEmailPorNombre(String nombre) {
+		String email = null;
+		try {
+			email = autentificacionRepositorio.encontrarEmailporNombre(nombre);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return email;
+	}
+	
 	@Override
 	public UsuarioDTO registrarUsuario(UsuarioDTO usuarioDTO) {
 		UsuarioDTO usuarioRegistradoDTO = null;
@@ -56,6 +76,12 @@ public class AutentificacionServicioImpl implements IAutentificationService {
 			e.printStackTrace();
 		}
 		return usuarioRegistradoDTO;
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 
