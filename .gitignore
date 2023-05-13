@@ -19,3 +19,7 @@ Microservicios/.metadata/.plugins/org.eclipse.core.resources/.root/.markers.snap
 Microservicios/.metadata/.plugins/org.eclipse.core.resources/2.snap
 Microservicios/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
 Microservicios/.metadata/.plugins/org.eclipse.m2e.logback.configuration/0.log
+*.snap
+*.log
+*.xmi
+*.snap
