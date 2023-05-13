@@ -3,11 +3,17 @@ package com.emails.servicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
 
 import com.commons.entidades.Email;
 import com.emails.repositorio.IEmailRepositorio;
 
+import jakarta.mail.internet.AddressException;
+import jakarta.mail.internet.InternetAddress;
+
+@Service
 public class EmailServicioImpl implements IEmailServicio{
 
 	@Autowired
@@ -16,20 +22,37 @@ public class EmailServicioImpl implements IEmailServicio{
 	@Autowired
 	private JavaMailSender emailSender;
 
-	@Autowired
-	private RestTemplate clienteRest;
+	//@Autowired
+	//private RestTemplate clienteRest;
 	
-	private String REGISTRO_ROUTE = "http://localhost:8085/registrado";
+	//private String REGISTRO_ROUTE = "http://localhost:8085/registrado";
 	
 	@Override
-	public void enviarEmailRegistro() {
-		String emailUsuario = clienteRest.getForObject(REGISTRO_ROUTE, String.class);
-		Email email = emailRepositorio.buscarEmailPorTipo("registro");
-		SimpleMailMessage message = new SimpleMailMessage();
-	    message.setTo(emailUsuario);
-	    message.setSubject(email.getAsunto());
-	    message.setText(email.getCuerpo());
-	    emailSender.send(message);
+	public boolean enviarEmailRegistro(String emailUsuario) {
+		String emailFalso = "rafagandolfogarcia@gmail.com";
+		if (isValidEmailAddress(emailFalso)) {
+			//String emailUsuario = clienteRest.getForObject(REGISTRO_ROUTE, String.class);
+			Email email = emailRepositorio.buscarEmailPorTipo("registro");
+			SimpleMailMessage message = new SimpleMailMessage();
+			message.setTo(emailFalso);
+			message.setSubject(email.getAsunto());
+			message.setText(email.getCuerpo());
+			emailSender.send(message);
+			return true;
+		} else {
+			return false;
+		}
 	}
+	
+	public static boolean isValidEmailAddress(String email) {
+	    try {
+	        InternetAddress emailAddr = new InternetAddress(email);
+	        emailAddr.validate();
+	        return true;
+	    } catch (AddressException ex) {
+	        return false;
+	    }
+	}
+
 
 }

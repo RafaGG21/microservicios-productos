@@ -2,5 +2,5 @@ package com.emails.servicio;
 
 public interface IEmailServicio {
 
-	public void enviarEmailRegistro();
+	public boolean enviarEmailRegistro(String emailUsuario);
 }
