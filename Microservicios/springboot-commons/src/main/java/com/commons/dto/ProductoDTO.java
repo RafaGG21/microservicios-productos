@@ -1,8 +1,15 @@
 package com.commons.dto;
 
+import java.io.Serializable;
 
-public class ProductoDTO {
+public class ProductoDTO implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2299360086737908594L;
+	
+	
 	private Long id;
 	private String nombre;
 	private Double precio;

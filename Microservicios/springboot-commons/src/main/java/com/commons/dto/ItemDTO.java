@@ -1,7 +1,15 @@
 package com.commons.dto;
 
-public class ItemDTO {
+import java.io.Serializable;
 
+public class ItemDTO implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6256058777793078587L;
+	
+	
 	private Long id;
 	private ProductoDTO producto;
 	private Integer cantidad;
