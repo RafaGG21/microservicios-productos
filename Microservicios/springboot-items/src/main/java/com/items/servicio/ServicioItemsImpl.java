@@ -24,9 +24,9 @@ public class ServicioItemsImpl implements IServicioItem{
 	@Autowired
 	private IRepositorioItem repositorioItem;
 	
-	private String LISTAR_PRODUCTOS_ROUTE = "http://servicio-productos/listar";
+	private String LISTAR_PRODUCTOS_ROUTE = "http://localhost:8080/listar";
 	
-	private String PRODUCTO_ID_ROUTE = "http://servicio-productos/ver/{id}";
+	private String PRODUCTO_ID_ROUTE = "http://localhost:8080/ver/{id}";
 	
 	@Override
 	public List<ItemDTO> listarItems() {
