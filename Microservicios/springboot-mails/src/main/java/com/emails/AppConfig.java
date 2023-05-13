@@ -21,15 +21,11 @@ public class AppConfig {
 		return new RestTemplate();
 	}
 	
-
     @Value("${spring.mail.host}")
     private String host;
 
     @Value("${spring.mail.port}")
     private int port;
-
-    @Value("${spring.mail.username}")
-    private String username;
 
 
     @Bean
@@ -37,8 +33,8 @@ public class AppConfig {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost(host);
         mailSender.setPort(port);
-        mailSender.setUsername(username);
         Dotenv dotenv = Dotenv.load();
+        mailSender.setUsername(dotenv.get("spring.mail.username"));
         String password = dotenv.get("spring.mail.password");
         mailSender.setPassword(password);
 

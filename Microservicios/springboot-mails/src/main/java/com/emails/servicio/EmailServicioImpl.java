@@ -28,14 +28,13 @@ public class EmailServicioImpl implements IEmailServicio{
 	
 	@Override
 	public boolean enviarEmailRegistro(UsuarioDTO usuarioDTO) {
-		String emailFalso = "rafagandolfogarcia@gmail.com";
 		if (isValidEmailAddress(usuarioDTO.getEmail())) {
 			//UsuarioDTO usuario = clienteRest.getForObject(REGISTRO_ROUTE, UsuarioDTO.class);
 			Email email = emailRepositorio.buscarEmailPorTipo("registro");
-			 String cuerpoEmail = email.getCuerpo().replace("<EMAIL>", usuarioDTO.getEmail());
-			 cuerpoEmail = cuerpoEmail.replace("<NOMBRE>", usuarioDTO.getNombre());
+			String cuerpoEmail = email.getCuerpo().replace("<EMAIL>", usuarioDTO.getEmail());
+			cuerpoEmail = cuerpoEmail.replace("<NOMBRE>", usuarioDTO.getNombre());
 			SimpleMailMessage message = new SimpleMailMessage();
-			message.setTo(emailFalso);
+			message.setTo(usuarioDTO.getEmail());
 			message.setSubject(email.getAsunto());
 			message.setText(cuerpoEmail);
 			emailSender.send(message);
