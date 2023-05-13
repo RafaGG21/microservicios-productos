@@ -1,6 +1,8 @@
 package com.emails.servicio;
 
+import com.commons.dto.UsuarioDTO;
+
 public interface IEmailServicio {
 
-	public boolean enviarEmailRegistro(String emailUsuario);
+	public boolean enviarEmailRegistro(UsuarioDTO usuarioDTO);
 }

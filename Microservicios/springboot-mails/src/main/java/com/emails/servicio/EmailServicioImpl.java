@@ -6,7 +6,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-
+import com.commons.dto.UsuarioDTO;
 import com.commons.entidades.Email;
 import com.emails.repositorio.IEmailRepositorio;
 
@@ -22,21 +22,22 @@ public class EmailServicioImpl implements IEmailServicio{
 	@Autowired
 	private JavaMailSender emailSender;
 
-	//@Autowired
-	//private RestTemplate clienteRest;
+	//@Autowired private RestTemplate clienteRest;
 	
 	//private String REGISTRO_ROUTE = "http://localhost:8085/registrado";
 	
 	@Override
-	public boolean enviarEmailRegistro(String emailUsuario) {
+	public boolean enviarEmailRegistro(UsuarioDTO usuarioDTO) {
 		String emailFalso = "rafagandolfogarcia@gmail.com";
-		if (isValidEmailAddress(emailFalso)) {
-			//String emailUsuario = clienteRest.getForObject(REGISTRO_ROUTE, String.class);
+		if (isValidEmailAddress(usuarioDTO.getEmail())) {
+			//UsuarioDTO usuario = clienteRest.getForObject(REGISTRO_ROUTE, UsuarioDTO.class);
 			Email email = emailRepositorio.buscarEmailPorTipo("registro");
+			 String cuerpoEmail = email.getCuerpo().replace("<EMAIL>", usuarioDTO.getEmail());
+			 cuerpoEmail = cuerpoEmail.replace("<NOMBRE>", usuarioDTO.getNombre());
 			SimpleMailMessage message = new SimpleMailMessage();
 			message.setTo(emailFalso);
 			message.setSubject(email.getAsunto());
-			message.setText(email.getCuerpo());
+			message.setText(cuerpoEmail);
 			emailSender.send(message);
 			return true;
 		} else {

@@ -44,12 +44,12 @@ public class AutentificacionControlador {
 	}
 	
 	@GetMapping("/registrado")
-	public ResponseEntity<String> registrado(@RequestBody String nombre) {
-		String email = autentificationService.obtenerEmailPorNombre(nombre);
-		if(email == null) {
+	public ResponseEntity<UsuarioDTO> registrado(@RequestBody String nombre) {
+		UsuarioDTO usuario = autentificationService.obtenerEmailPorNombre(nombre);
+		if(usuario == null) {
 			return ResponseEntity.notFound().build();
 		} else {
-			return ResponseEntity.ok().body(email);
+			return ResponseEntity.ok().body(usuario);
 		}
 	}
 	
