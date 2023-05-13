@@ -25,7 +25,8 @@ public class AutentificacionControlador {
 		if(usuario == null) {
 			return ResponseEntity.notFound().build();
 		} else {
-			return ResponseEntity.ok().build();
+			UsuarioDTO usuarioDevolver = new UsuarioDTO(usuario.getEmail(),usuario.getNombre(),null);
+			return ResponseEntity.ok().body(usuarioDevolver);
 		}
 	}
 	
@@ -36,7 +37,8 @@ public class AutentificacionControlador {
 		if(usuarioGuardado == null || usuarioGuardado.getId() == null) {
 			return  ResponseEntity.badRequest().build();
 		} else {
-			return ResponseEntity.ok().body(usuarioGuardado);
+			UsuarioDTO usuarioDevolver = new UsuarioDTO(usuarioGuardado.getEmail(),usuarioGuardado.getNombre(),null);
+			return ResponseEntity.ok().body(usuarioDevolver);
 		}
 	}
 	
