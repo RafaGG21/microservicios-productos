@@ -1,0 +1,13 @@
+package com.commons;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SpringbootCommonsProductosApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SpringbootCommonsProductosApplication.class, args);
+	}
+
+}

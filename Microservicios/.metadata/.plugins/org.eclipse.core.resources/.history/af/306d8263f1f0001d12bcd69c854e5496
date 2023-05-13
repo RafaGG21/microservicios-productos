@@ -1,0 +1,40 @@
+package com.productos.servicios;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.productos.dto.ProductoDTO;
+import com.productos.entidades.Producto;
+import com.productos.repository.IProductoRepository;
+
+public class ProductoServiceImpl implements IProductoServicio{
+
+	@Autowired
+	private IProductoRepository productoRepository;
+	
+	@Override
+	public List<Producto> listarProductos() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Producto encontrarProductoPorId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void guardarProducto(ProductoDTO producto) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void eliminarProductoPorId(Long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

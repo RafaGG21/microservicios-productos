@@ -1,0 +1,10 @@
+package com.items.servicio;
+
+import java.util.List;
+
+import com.commons.dto.ItemDTO;
+
+public interface IServicioItem {
+
+	public List<ItemDTO> listarItems();
+}

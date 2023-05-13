@@ -1,0 +1,12 @@
+package com.productos.servicios;
+
+import java.util.List;
+
+import com.productos.entidades.Producto;
+
+public interface IProductoServicio {
+
+	List<Producto> listarProductos();
+	
+	
+}

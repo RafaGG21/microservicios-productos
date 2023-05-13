@@ -1,0 +1,45 @@
+package com.items.servicio;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.commons.dto.ItemDTO;
+import com.commons.dto.ProductoDTO;
+import com.commons.entidades.Item;
+import com.commons.mapper.GenericMapper;
+import com.productos.cliente.feign.IProductoClienteFeign;
+
+@Service
+public class ServicioItemsImpl implements IServicioItem{
+
+	@Autowired
+	private IProductoClienteFeign productoClient;
+	
+	@Autowired
+	private IProductoClienteFeign repositorioItem;
+	
+	@Override
+	public List<ItemDTO> listarItems() {
+		return productoClient.listarProductos().stream()
+				.map(producto -> new ItemDTO(producto,1) ).collect(Collectors.toList());
+	}
+
+	@Override
+	public ItemDTO verItem(Long id, Integer cantidad) {
+		return new ItemDTO(productoClient.encontrarProductoPorId(id),cantidad);
+	}
+
+	@Override
+	public ItemDTO crearItem(ProductoDTO producto, Integer cantidad) {
+		ItemDTO nuevoItemDTO = new ItemDTO( productoClient.guardarProducto(producto),cantidad);
+		Item nuevoItem = GenericMapper.map(nuevoItemDTO, Item.class);
+		
+		return nuevoItemDTO;
+		
+	}
+
+
+}

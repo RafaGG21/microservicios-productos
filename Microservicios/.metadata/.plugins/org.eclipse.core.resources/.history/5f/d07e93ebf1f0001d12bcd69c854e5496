@@ -1,0 +1,17 @@
+package com.productos.servicios;
+
+import java.util.List;
+
+import com.productos.dto.ProductoDTO;
+import com.productos.entidades.Producto;
+
+public interface IProductoServicio {
+
+	public List<ProductoDTO> listarProductos();
+
+	public Producto encontrarProductoPorId();
+
+	public void guardarProducto(ProductoDTO producto);
+
+	public void eliminarProductoPorId(Long id);
+}

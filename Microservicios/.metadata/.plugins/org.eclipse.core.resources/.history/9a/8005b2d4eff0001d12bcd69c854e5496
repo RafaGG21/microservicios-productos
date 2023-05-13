@@ -1,0 +1,17 @@
+package com.productos.mapper;
+
+import java.lang.reflect.Field;
+
+public class GenericMapper {
+	import org.modelmapper.ModelMapper;
+
+	public class Mapper {
+	    private static ModelMapper modelMapper = new ModelMapper();
+
+	    public static <S, D> D map(S source, Class<D> destinationClass) {
+	        return modelMapper.map(source, destinationClass);
+	    }
+	}
+
+	}
+}

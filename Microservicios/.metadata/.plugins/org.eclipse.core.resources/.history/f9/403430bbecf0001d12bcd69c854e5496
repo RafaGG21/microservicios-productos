@@ -1,0 +1,31 @@
+package com.productos;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import com.productos.mapper.GenericMapper;
+
+
+@SpringBootApplication
+public class SpringbootServicioProductosApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SpringbootServicioProductosApplication.class, args);
+		
+	}
+	public class Main {
+	    public static void main(String[] args) throws IllegalAccessException {
+	        Producto user = new User();
+	        user.setName("John Doe");
+	        user.setAge(30);
+
+	        ProductoDto userDto = new UserDto();
+	        GenericMapper.map(user, userDto);
+
+	        System.out.println(userDto.getName()); // output: "John Doe"
+	        System.out.println(userDto.getAge()); // output: 30
+	    }
+	}
+}
+
+

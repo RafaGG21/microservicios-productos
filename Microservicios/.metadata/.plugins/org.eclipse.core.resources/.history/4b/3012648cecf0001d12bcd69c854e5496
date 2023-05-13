@@ -1,0 +1,17 @@
+package com.productos.entidades;
+
+import java.util.Date;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="productos")
+public class Producto {
+
+	private Long id;
+	private String nombre;
+	private Double precio;
+	private Date fechaCreacion;
+	
+}

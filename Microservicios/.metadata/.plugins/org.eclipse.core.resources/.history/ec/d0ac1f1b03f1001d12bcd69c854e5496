@@ -1,0 +1,5 @@
+package com.items.servicio;
+
+public interface IServicioItem {
+
+}

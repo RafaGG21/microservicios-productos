@@ -1,0 +1,15 @@
+package com.productos.mapper;
+import java.lang.reflect.Field;
+public class GenericMapper {
+	public static <T, U> void map(T source, U destination) throws IllegalAccessException {
+        for (Field sourceField : source.getClass().getDeclaredFields()) {
+            sourceField.setAccessible(true);
+            Field destField;
+            try {
+                destField = destination.getClass().getDeclaredField(sourceField.getName());
+                destField.setAccessible(true);
+                destField.set(destination, sourceField.get(source));
+            } catch (NoSuchFieldException e) {
+                // Ignore fields that don't exist in the destination object
+            }
+}

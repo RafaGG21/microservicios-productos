@@ -1,0 +1,19 @@
+package com.productos.cliente.feign;
+
+import java.util.List;
+
+import org.springframework.cloud.openfeign.FeignClient;
+
+import com.productos.dto.ProductoDTO;
+
+@FeignClient(name = "servicio-productos", url="localhost:8081")
+public interface IProductoClienteFeign {
+
+	public List<ProductoDTO> listarProductos();
+
+	public ProductoDTO encontrarProductoPorId(Long id);
+
+	public ProductoDTO guardarProducto(ProductoDTO producto);
+
+	public void eliminarProductoPorId(Long id);
+}

@@ -1,0 +1,30 @@
+package com.productos;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import com.productos.dto.ProductoDTO;
+import com.productos.entidades.Producto;
+import com.productos.mapper.GenericMapper;
+
+
+@SpringBootApplication
+public class SpringbootServicioProductosApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SpringbootServicioProductosApplication.class, args);
+		
+	}
+	public class Main {
+	    public static void main(String[] args) throws IllegalAccessException {
+	        Producto producto = new Producto();
+
+	        ProductoDTO productoDto = new ProductoDTO();
+	        GenericMapper.map(producto, productoDto);
+
+
+	    }
+	}
+}
+
+

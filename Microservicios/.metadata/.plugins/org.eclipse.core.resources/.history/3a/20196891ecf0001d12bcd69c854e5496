@@ -1,0 +1,12 @@
+package com.productos.dto;
+
+import java.util.Date;
+
+public class ProductoDTO {
+
+	private Long id;
+	private String nombre;
+	private Double precio;
+	private Date fechaCreacion;
+	
+}

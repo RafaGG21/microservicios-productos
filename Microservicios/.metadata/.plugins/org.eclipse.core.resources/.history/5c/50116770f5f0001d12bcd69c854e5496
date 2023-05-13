@@ -1,0 +1,8 @@
+package com.productos.cliente.feign;
+
+import org.springframework.cloud.openfeign.FeignClient;
+
+@FeignClient
+public interface IProductoClienteFeign {
+
+}

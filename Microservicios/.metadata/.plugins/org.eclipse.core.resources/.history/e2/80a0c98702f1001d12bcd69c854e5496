@@ -1,0 +1,10 @@
+package com.commons.entidades;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "item")
+public class Item {
+
+}

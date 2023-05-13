@@ -1,0 +1,5 @@
+package com.productos.mapper;
+
+public class GenericMapper {
+
+}

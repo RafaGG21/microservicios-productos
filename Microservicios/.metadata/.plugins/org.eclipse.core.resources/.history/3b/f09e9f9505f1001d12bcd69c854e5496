@@ -1,0 +1,31 @@
+package com.items.servicio;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.commons.dto.ItemDTO;
+import com.productos.cliente.feign.IProductoClienteFeign;
+
+@Service
+public class ServicioItemsImpl implements IServicioItem{
+
+	@Autowired
+	private IProductoClienteFeign productoClient;
+	
+	@Override
+	public List<ItemDTO> listarItems() {
+		return productoClient.listarProductos().stream()
+				.map(producto -> new ItemDTO(producto,1) ).collect(Collectors.toList());
+	}
+
+	@Override
+	public ItemDTO verItem(Long id, Integer cantidad) {
+		// TODO Auto-generated method stub
+		return new ItemDTO(productoClient.encontrarProductoPorId(id),cantidad);
+	}
+
+
+}

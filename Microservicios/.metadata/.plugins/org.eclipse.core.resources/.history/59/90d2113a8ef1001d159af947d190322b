@@ -1,0 +1,8 @@
+spring.application.name=servicio-productos
+server.port=8080
+
+spring.datasource.url=jdbc:mysql://localhost:3306/productos_db?createDatabaseIfNotExist=true&useSSL=true
+spring.datasource.username=usuario
+spring.datasource.password=contraseña
+
+spring.jpa.hibernate.ddl-auto=update
