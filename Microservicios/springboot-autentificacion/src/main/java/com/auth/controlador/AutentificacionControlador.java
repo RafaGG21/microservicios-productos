@@ -3,6 +3,7 @@ package com.auth.controlador;
 import org.apache.http.protocol.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +15,7 @@ import com.commons.dto.UsuarioDTO;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class AutentificacionControlador {
 
 	@Autowired
@@ -44,12 +46,12 @@ public class AutentificacionControlador {
 	}
 	
 	@GetMapping("/registrado")
-	public ResponseEntity<UsuarioDTO> registrado(@RequestBody String nombre) {
-		UsuarioDTO usuario = autentificationService.obtenerEmailPorNombre(nombre);
-		if(usuario == null) {
+	public ResponseEntity<UsuarioDTO> registrado(UsuarioDTO usuario) {
+		UsuarioDTO usuarioBuscar = autentificationService.obtenerEmailPorNombre(usuario.getNombre());
+		if(usuarioBuscar == null) {
 			return ResponseEntity.notFound().build();
 		} else {
-			return ResponseEntity.ok().body(usuario);
+			return ResponseEntity.ok().body(usuarioBuscar);
 		}
 	}
 	
