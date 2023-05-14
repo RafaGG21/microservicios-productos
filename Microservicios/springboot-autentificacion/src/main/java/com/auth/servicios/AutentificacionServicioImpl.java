@@ -45,10 +45,10 @@ public class AutentificacionServicioImpl  implements IAutentificationService{
 	}
 
 	@Override
-	public UsuarioDTO obtenerEmailPorNombre(String nombre) {
+	public UsuarioDTO obtenerUsuarioPorEmail(String email) {
 		UsuarioDTO usuarioDTO = null;
 		try {
-			Usuario usuario = autentificacionRepositorio.encontrarEmailporNombre(nombre);
+			Usuario usuario = autentificacionRepositorio.encontrarUsuarioPorEmail(email);
 			if(usuario != null) {
 				GenericMapper.map(usuario,UsuarioDTO.class);
 			}

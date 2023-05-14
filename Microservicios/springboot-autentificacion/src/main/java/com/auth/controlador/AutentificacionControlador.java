@@ -35,24 +35,20 @@ public class AutentificacionControlador {
 	
 	@PostMapping("/registrar")
 	public ResponseEntity<UsuarioDTO> registrar(@RequestBody UsuarioDTO usuarioDTO) {
-		
-		UsuarioDTO usuarioGuardado = autentificationService.registrarUsuario(usuarioDTO);
-		if(usuarioGuardado == null || usuarioGuardado.getId() == null) {
-			return  ResponseEntity.badRequest().build();
+		UsuarioDTO usuarioYaExistente = autentificationService.obtenerUsuarioPorEmail(usuarioDTO.getEmail());
+		UsuarioDTO usuarioGuardado;
+		if (usuarioYaExistente != null && usuarioYaExistente.getId() != null) {
+			return ResponseEntity.badRequest().build();
 		} else {
-			UsuarioDTO usuarioDevolver = new UsuarioDTO(usuarioGuardado.getEmail(),usuarioGuardado.getNombre(),null);
-			return ResponseEntity.ok().body(usuarioDevolver);
+			usuarioGuardado = autentificationService.registrarUsuario(usuarioDTO);
+			if (usuarioGuardado == null || usuarioGuardado.getId() == null) {
+				return ResponseEntity.badRequest().build();
+			} else {
+				UsuarioDTO usuarioDevolver = new UsuarioDTO(usuarioGuardado.getEmail(), usuarioGuardado.getNombre(),
+						null);
+				return ResponseEntity.ok().body(usuarioDevolver);
+			}
 		}
 	}
-	
-	@GetMapping("/registrado")
-	public ResponseEntity<UsuarioDTO> registrado(UsuarioDTO usuario) {
-		UsuarioDTO usuarioBuscar = autentificationService.obtenerEmailPorNombre(usuario.getNombre());
-		if(usuarioBuscar == null) {
-			return ResponseEntity.notFound().build();
-		} else {
-			return ResponseEntity.ok().body(usuarioBuscar);
-		}
-	}
-	
+
 }
