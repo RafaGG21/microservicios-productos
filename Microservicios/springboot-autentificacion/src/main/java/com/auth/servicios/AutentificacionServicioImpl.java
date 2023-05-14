@@ -15,26 +15,28 @@ import com.commons.entidades.Usuario;
 import com.commons.mapper.GenericMapper;
 
 @Service
-public class AutentificacionServicioImpl  implements IAutentificationService{
+public class AutentificacionServicioImpl implements IAutentificationService {
 
 	@Autowired
 	IAutentificacionRepositorio autentificacionRepositorio;
 
 	@Autowired
 	BCryptPasswordEncoder encoder;
-	
+
 	@Bean
 	public static BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Override
 	public UsuarioDTO obtenerPorEmailYPassword(String email, String password) {
 		UsuarioDTO usuarioDTO = null;
 		try {
 			Usuario usuario = autentificacionRepositorio.encontrarUsuarioPorEmail(email);
 			if (usuario != null && encoder.matches(password, usuario.getPassword())) {
-				//List<GrantedAuthority> roles = usuario.getRoles().stream().map(rol -> new SimpleGrantedAuthority(rol.getNombre())).peek(authority -> authority.getAuthority()).collect(Collectors.toList());
+				// List<GrantedAuthority> roles = usuario.getRoles().stream().map(rol -> new
+				// SimpleGrantedAuthority(rol.getNombre())).peek(authority ->
+				// authority.getAuthority()).collect(Collectors.toList());
 				usuarioDTO = GenericMapper.map(usuario, UsuarioDTO.class);
 			}
 
@@ -49,15 +51,15 @@ public class AutentificacionServicioImpl  implements IAutentificationService{
 		UsuarioDTO usuarioDTO = null;
 		try {
 			Usuario usuario = autentificacionRepositorio.encontrarUsuarioPorEmail(email);
-			if(usuario != null) {
-				GenericMapper.map(usuario,UsuarioDTO.class);
+			if (usuario != null) {
+				GenericMapper.map(usuario, UsuarioDTO.class);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return usuarioDTO;
 	}
-	
+
 	@Override
 	public UsuarioDTO registrarUsuario(UsuarioDTO usuarioDTO) {
 		UsuarioDTO usuarioRegistradoDTO = null;
@@ -65,11 +67,13 @@ public class AutentificacionServicioImpl  implements IAutentificationService{
 		usuarioDTO.setPassword(passwordCodificado);
 		Usuario usuario = GenericMapper.map(usuarioDTO, Usuario.class);
 		try {
-			Usuario usuarioRegistrado = autentificacionRepositorio.save(usuario);
-			if (usuarioRegistrado != null) {
-				usuarioRegistradoDTO = GenericMapper.map(usuarioRegistrado, UsuarioDTO.class);
+			UsuarioDTO usuarioEnBBDD = obtenerUsuarioPorEmail(usuario.getEmail());
+			if (usuarioEnBBDD == null) {
+				Usuario usuarioRegistrado = autentificacionRepositorio.save(usuario);
+				if (usuarioRegistrado != null) {
+					usuarioRegistradoDTO = GenericMapper.map(usuarioRegistrado, UsuarioDTO.class);
+				}
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

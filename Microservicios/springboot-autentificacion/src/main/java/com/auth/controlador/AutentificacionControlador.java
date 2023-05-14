@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.auth.servicios.IAutentificationService;
+import com.commons.dto.ResponseDTO;
 import com.commons.dto.UsuarioDTO;
 
 
@@ -22,32 +23,45 @@ public class AutentificacionControlador {
 	IAutentificationService autentificationService;
 	
 	@GetMapping("/login")
-	public ResponseEntity<UsuarioDTO> login(@RequestBody UsuarioDTO usuarioDTO) {
+	public ResponseEntity<ResponseDTO> login(@RequestBody UsuarioDTO usuarioDTO) {
 		
 		UsuarioDTO usuario = autentificationService.obtenerPorEmailYPassword(usuarioDTO.getEmail(),usuarioDTO.getPassword());
 		if(usuario == null) {
 			return ResponseEntity.notFound().build();
 		} else {
-			UsuarioDTO usuarioDevolver = new UsuarioDTO(usuario.getEmail(),usuario.getNombre(),null);
-			return ResponseEntity.ok().body(usuarioDevolver);
+			ResponseDTO respuesta = new ResponseDTO();
+			respuesta.setCorrecto(true);
+			//UsuarioDTO usuarioDevolver = new UsuarioDTO(usuario.getEmail(),usuario.getNombre(),null);
+			return ResponseEntity.ok().body(respuesta);
 		}
 	}
 	
 	@PostMapping("/registrar")
-	public ResponseEntity<UsuarioDTO> registrar(@RequestBody UsuarioDTO usuarioDTO) {
+	public ResponseEntity<ResponseDTO> registrar(@RequestBody UsuarioDTO usuarioDTO) {
 		UsuarioDTO usuarioYaExistente = autentificationService.obtenerUsuarioPorEmail(usuarioDTO.getEmail());
 		UsuarioDTO usuarioGuardado;
-		if (usuarioYaExistente != null && usuarioYaExistente.getId() != null) {
-			return ResponseEntity.badRequest().build();
-		} else {
-			usuarioGuardado = autentificationService.registrarUsuario(usuarioDTO);
-			if (usuarioGuardado == null || usuarioGuardado.getId() == null) {
-				return ResponseEntity.badRequest().build();
+		try {
+			if (usuarioYaExistente != null && usuarioYaExistente.getId() != null) {
+				ResponseDTO respuesta = new ResponseDTO();
+				respuesta.setCorrecto(false);
+				return ResponseEntity.badRequest().body(respuesta);
 			} else {
-				UsuarioDTO usuarioDevolver = new UsuarioDTO(usuarioGuardado.getEmail(), usuarioGuardado.getNombre(),
-						null);
-				return ResponseEntity.ok().body(usuarioDevolver);
-			}
+				usuarioGuardado = autentificationService.registrarUsuario(usuarioDTO);
+				if (usuarioGuardado == null || usuarioGuardado.getId() == null) {
+					ResponseDTO respuesta = new ResponseDTO();
+					respuesta.setCorrecto(false);
+					return ResponseEntity.badRequest().body(respuesta);
+				} else {
+					ResponseDTO respuesta = new ResponseDTO();
+					respuesta.setCorrecto(true);
+					//UsuarioDTO usuarioDevolver = new UsuarioDTO(usuarioGuardado.getEmail(), usuarioGuardado.getNombre(),null);
+					return ResponseEntity.ok().body(respuesta);
+				}
+			} 
+		} catch (Exception e) {
+			ResponseDTO respuesta = new ResponseDTO();
+			respuesta.setCorrecto(false);
+			return ResponseEntity.badRequest().body(respuesta);
 		}
 	}
 
