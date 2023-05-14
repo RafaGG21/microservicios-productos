@@ -22,12 +22,14 @@ public class AutentificacionControlador {
 	@Autowired
 	IAutentificationService autentificationService;
 	
-	@GetMapping("/login")
+	@PostMapping("/login")
 	public ResponseEntity<ResponseDTO> login(@RequestBody UsuarioDTO usuarioDTO) {
 		
 		UsuarioDTO usuario = autentificationService.obtenerPorEmailYPassword(usuarioDTO.getEmail(),usuarioDTO.getPassword());
 		if(usuario == null) {
-			return ResponseEntity.notFound().build();
+			ResponseDTO respuesta = new ResponseDTO();
+			respuesta.setCorrecto(false);
+			return ResponseEntity.badRequest().body(respuesta);
 		} else {
 			ResponseDTO respuesta = new ResponseDTO();
 			respuesta.setCorrecto(true);
