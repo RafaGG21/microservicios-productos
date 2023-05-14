@@ -15,4 +15,6 @@ public interface IProductoServicio {
 	public ProductoDTO guardarProducto(ProductoDTO producto);
 
 	public void eliminarProductoPorId(Long id);
+
+	public List<ProductoDTO> encontrarProductoPorTermino(String termino);
 }

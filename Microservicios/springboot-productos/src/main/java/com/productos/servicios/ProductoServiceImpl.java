@@ -2,6 +2,7 @@ package com.productos.servicios;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,8 +29,7 @@ public class ProductoServiceImpl implements IProductoServicio{
 		return  listaProductosDTO;
 	}
 
-	@Override
-	
+	@Override	
 	public ProductoDTO encontrarProductoPorId(Long id) {
 		Producto producto = productoRepository.findById(id).orElse(null);
 		if (producto == null) {
@@ -50,5 +50,18 @@ public class ProductoServiceImpl implements IProductoServicio{
 	public void eliminarProductoPorId(Long id) {
 		productoRepository.deleteById(id);
 	}
+	
+	@Override	
+	public List<ProductoDTO> encontrarProductoPorTermino(String termino) {
+		List<Producto> producto = productoRepository.buscarProductoPorTermino(termino);
+		if (producto == null) {
+			return null;
+		} else {
+			return producto.stream().map(p -> GenericMapper.map(p, ProductoDTO.class))
+					.collect(Collectors.toList());
+
+		}
+	}
+
 
 }
