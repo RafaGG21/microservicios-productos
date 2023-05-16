@@ -17,6 +17,7 @@ public class TokenUtils {
 	
     public static String generateToken() {
         String token = UUID.randomUUID().toString();
+        resetPasswordTokens.add(token);
         return token;
     }
 
@@ -24,7 +25,9 @@ public class TokenUtils {
         // Verificar si el token ha expirado
         LocalDateTime expirationDate = getExpirationDate(token);
         LocalDateTime now = LocalDateTime.now();
-        return now.isBefore(expirationDate);
+        boolean tokenEnListaTokens = !resetPasswordTokens.isEmpty() ? 
+        		resetPasswordTokens.stream().anyMatch(t -> t.equals(token)) : false;
+        return tokenEnListaTokens && now.isBefore(expirationDate);
     }
 
     private static LocalDateTime getExpirationDate(String token) {

@@ -88,5 +88,17 @@ public class AutentificacionServicioImpl implements IAutentificationService {
 		return GenericMapper.map(usuario, UsuarioDTO.class);
 	}
 	
+	@Override
+	public UsuarioDTO editarUsuario(UsuarioDTO usuarioDTO) {
+		Usuario usuarioBBDD = autentificacionRepositorio.encontrarUsuarioPorEmail(usuarioDTO.getEmail());
+		if(usuarioBBDD != null) {
+			Usuario usuarioEditado = GenericMapper.map(usuarioDTO, Usuario.class);
+			Usuario usuarioGuardar = autentificacionRepositorio.save(usuarioEditado);
+			return GenericMapper.map(usuarioGuardar, UsuarioDTO.class);
+			
+		}
+		return null;
+	}
+	
 
 }

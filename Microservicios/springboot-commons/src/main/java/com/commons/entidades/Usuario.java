@@ -32,8 +32,6 @@ public class Usuario implements Serializable {
 	String email;
 	String password;
 	String imagen;
-	@Column(name = "password_restablecer")
-	String passwordRestablecer;
 
 	public Long getId() {
 		return id;
@@ -73,14 +71,6 @@ public class Usuario implements Serializable {
 
 	public void setImagen(String imagen) {
 		this.imagen = imagen;
-	}
-
-	public String getPasswordRestablecer() {
-		return passwordRestablecer;
-	}
-
-	public void setPasswordRestablecer(String passwordRestablecer) {
-		this.passwordRestablecer = passwordRestablecer;
 	}
 
 	public Usuario(Long id, String nombre, String email, String password, String imagen) {

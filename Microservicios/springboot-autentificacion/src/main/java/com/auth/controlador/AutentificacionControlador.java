@@ -79,8 +79,13 @@ public class AutentificacionControlador {
 	}
 
 	@PutMapping("editar/{email}")
-	ResponseEntity<UsuarioDTO> editarUsuario(@RequestBody UsuarioDTO usuarioDTO) {
-		return null;
+	public ResponseEntity<UsuarioDTO> editarUsuario(@RequestBody UsuarioDTO usuarioDTO) {
+		UsuarioDTO usuarioEditado = autentificationService.editarUsuario(usuarioDTO);
+		if (usuarioEditado == null) {
+			return ResponseEntity.badRequest().build();
+		} else {
+			return ResponseEntity.ok().body(usuarioEditado);
+		}
 
 	}
 
@@ -93,10 +98,7 @@ public class AutentificacionControlador {
 			respuesta.setCorrecto(false);
 			return ResponseEntity.badRequest().body(requestPasswordDTO.getEmail());
 		} else {
-			ResponseDTO respuesta = new ResponseDTO();
-			respuesta.setCorrecto(true);
 			String resultado = clienteEmail.emailPorRestablecerPassword(usuario);
-
 			return ResponseEntity.ok().body(resultado);
 		}
 
@@ -107,14 +109,22 @@ public class AutentificacionControlador {
 			@RequestBody ResetPasswordDto resetPasswordDto) {
 
 		if (TokenUtils.isTokenValid(token)) {
-
 			autentificationService.editarPasswordUsuario(resetPasswordDto.getEmail(), resetPasswordDto.getPassword());
-
 			TokenUtils.deleteToken(token);
-
 			return ResponseEntity.ok("Contraseña restablecida exitosamente.");
 		}
-
 		return ResponseEntity.badRequest().body("Token de restablecimiento de contraseña inválido.");
+	}
+
+	@GetMapping("/email/{email}")
+	public ResponseEntity<UsuarioDTO> getUsuarioPorEmail(@RequestBody UsuarioDTO usuarioDTO) {
+		UsuarioDTO usuario = autentificationService.obtenerUsuarioPorEmail(usuarioDTO.getEmail());
+		if (usuario == null) {
+			return ResponseEntity.notFound().build();
+		} else {
+
+			return ResponseEntity.ok().body(usuarioDTO);
+		}
+
 	}
 }
