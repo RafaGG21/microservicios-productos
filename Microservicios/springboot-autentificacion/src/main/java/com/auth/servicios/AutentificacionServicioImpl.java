@@ -51,9 +51,9 @@ public class AutentificacionServicioImpl implements IAutentificationService {
 		UsuarioDTO usuarioDTO = null;
 		try {
 			Usuario usuario = autentificacionRepositorio.encontrarUsuarioPorEmail(email);
-			if (usuario != null) {
-				GenericMapper.map(usuario, UsuarioDTO.class);
-			}
+			
+			usuarioDTO = GenericMapper.map(usuario, UsuarioDTO.class);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -79,5 +79,14 @@ public class AutentificacionServicioImpl implements IAutentificationService {
 		}
 		return usuarioRegistradoDTO;
 	}
+
+	@Override
+	public UsuarioDTO editarUsuario(String email, String password) {
+		Usuario usuarioBBDD = autentificacionRepositorio.encontrarUsuarioPorEmail(email);
+		usuarioBBDD.setPassword(password);
+		Usuario usuario = autentificacionRepositorio.save(usuarioBBDD);
+		return GenericMapper.map(usuario, UsuarioDTO.class);
+	}
+	
 
 }

@@ -17,9 +17,15 @@ public class EmailsControlador {
 	@Autowired
 	private IEmailServicio emailServicio;
 	
-	@PostMapping("registrado")
+	@PostMapping("/registrado")
 	private String emailPorRegistro(@RequestBody UsuarioDTO usuarioDTO) {
 		boolean enviadoConExito = emailServicio.enviarEmailRegistro(usuarioDTO);
+		return enviadoConExito ?  "Email enviado con exito " :  "Email no enviado";
+	}
+	
+	@PostMapping("/restablecer")
+	private String emailPorRestablecerPassword(@RequestBody UsuarioDTO usuarioDTO) {
+		boolean enviadoConExito = emailServicio.enviarEmailRestablecerPassword(usuarioDTO);
 		return enviadoConExito ?  "Email enviado con exito " :  "Email no enviado";
 	}
 }

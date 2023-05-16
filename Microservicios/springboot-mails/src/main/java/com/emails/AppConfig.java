@@ -12,6 +12,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import com.commons.utils.TokenUtils;
+
 import io.github.cdimascio.dotenv.Dotenv;
 
 
@@ -65,4 +67,11 @@ public class AppConfig {
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
+    
+    @Bean
+    public TokenUtils getTokenUtils() {
+    	return new TokenUtils();
+    }
+    
+ 
 }

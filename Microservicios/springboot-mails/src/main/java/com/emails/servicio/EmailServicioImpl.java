@@ -8,6 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.commons.dto.UsuarioDTO;
 import com.commons.entidades.Email;
+import com.commons.utils.TokenUtils;
 import com.emails.repositorio.IEmailRepositorio;
 
 import jakarta.mail.internet.AddressException;
@@ -21,10 +22,9 @@ public class EmailServicioImpl implements IEmailServicio{
 	
 	@Autowired
 	private JavaMailSender emailSender;
-
-	//@Autowired private RestTemplate clienteRest;
 	
-	//private String REGISTRO_ROUTE = "http://localhost:8085/registrado";
+	@Autowired
+	private TokenUtils tokenUtils;
 	
 	@Override
 	public boolean enviarEmailRegistro(UsuarioDTO usuarioDTO) {
@@ -33,6 +33,28 @@ public class EmailServicioImpl implements IEmailServicio{
 			Email email = emailRepositorio.buscarEmailPorTipo("registro");
 			String cuerpoEmail = email.getCuerpo().replace("<EMAIL>", usuarioDTO.getEmail());
 			cuerpoEmail = cuerpoEmail.replace("<NOMBRE>", usuarioDTO.getNombre());
+
+			SimpleMailMessage message = new SimpleMailMessage();
+			message.setTo(usuarioDTO.getEmail());
+			message.setSubject(email.getAsunto());
+			message.setText(cuerpoEmail);
+			emailSender.send(message);
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean enviarEmailRestablecerPassword(UsuarioDTO usuarioDTO) {
+		if (isValidEmailAddress(usuarioDTO.getEmail())) {
+			Email email = emailRepositorio.buscarEmailPorTipo("restablecer");
+			String cuerpoEmail = email.getCuerpo();
+			cuerpoEmail = cuerpoEmail.replace("<nombre>", usuarioDTO.getNombre());
+			String token = TokenUtils.generateToken();
+			String url = "http://localhost:8087/restablecer-contrasena?token=";
+			url += token;
+			cuerpoEmail = cuerpoEmail.replace("<url>", url);
 			SimpleMailMessage message = new SimpleMailMessage();
 			message.setTo(usuarioDTO.getEmail());
 			message.setSubject(email.getAsunto());

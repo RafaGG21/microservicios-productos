@@ -17,28 +17,24 @@ import jakarta.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "usuarios")
-public class Usuario implements Serializable{
+public class Usuario implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 492874766793324600L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
 	String nombre;
-	
+
 	@Column(unique = true)
 	String email;
 	String password;
 	String imagen;
-	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name="usuario_roles", joinColumns = @JoinColumn(name="usuario_id"), 
-	inverseJoinColumns = @JoinColumn(name="rol_id"),
-	uniqueConstraints = {@UniqueConstraint(columnNames = {"usuario_id","rol_id"})})
-	List<Rol> roles;
-	
+	@Column(name = "password_restablecer")
+	String passwordRestablecer;
+
 	public Long getId() {
 		return id;
 	}
@@ -78,13 +74,13 @@ public class Usuario implements Serializable{
 	public void setImagen(String imagen) {
 		this.imagen = imagen;
 	}
-	
-	public List<Rol> getRoles() {
-		return roles;
+
+	public String getPasswordRestablecer() {
+		return passwordRestablecer;
 	}
 
-	public void setRoles(List<Rol> roles) {
-		this.roles = roles;
+	public void setPasswordRestablecer(String passwordRestablecer) {
+		this.passwordRestablecer = passwordRestablecer;
 	}
 
 	public Usuario(Long id, String nombre, String email, String password, String imagen) {

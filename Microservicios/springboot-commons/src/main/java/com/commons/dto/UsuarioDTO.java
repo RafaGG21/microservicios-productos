@@ -12,12 +12,12 @@ public class UsuarioDTO implements Serializable{
 	 */
 	private static final long serialVersionUID = -1664824625593883351L;
 	
-	Long id;
-	String nombre;
-	String email;
-	String password;
-	String imagen;
-	List<Rol> roles;
+	private Long id;
+	private String nombre;
+	private String email;
+	private String password;
+	private String imagen;
+	private List<Rol> roles;
 	
 	public Long getId() {
 		return id;
