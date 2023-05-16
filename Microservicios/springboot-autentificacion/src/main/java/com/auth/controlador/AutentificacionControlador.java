@@ -27,10 +27,8 @@ public class AutentificacionControlador {
 	@Autowired
 	private IAutentificationService autentificationService;
 
-
 	@Autowired
 	private ClienteEmail clienteEmail;
-
 
 	@PostMapping("/login")
 	public ResponseEntity<ResponseDTO> login(@RequestBody UsuarioDTO usuarioDTO) {
@@ -86,7 +84,6 @@ public class AutentificacionControlador {
 
 	}
 
-
 	@PostMapping("/request")
 	public ResponseEntity<String> requestPasswordReset(@RequestBody RequestPasswordDTO requestPasswordDTO) {
 
@@ -102,22 +99,22 @@ public class AutentificacionControlador {
 
 			return ResponseEntity.ok().body(resultado);
 		}
-		
+
 	}
-	
-	 @PostMapping("/reset-password")
-	    public ResponseEntity<String> resetPassword(@RequestParam("token") String token,
-	                                                @RequestBody ResetPasswordDto resetPasswordDto) {
 
-	        if (TokenUtils.isTokenValid(token)) {
+	@PostMapping("/reset-password")
+	public ResponseEntity<String> resetPassword(@RequestParam("token") String token,
+			@RequestBody ResetPasswordDto resetPasswordDto) {
 
-	            autentificationService.editarUsuario(resetPasswordDto.getEmail(), resetPasswordDto.getPassword());
+		if (TokenUtils.isTokenValid(token)) {
 
-	            TokenUtils.deleteToken(token);
+			autentificationService.editarPasswordUsuario(resetPasswordDto.getEmail(), resetPasswordDto.getPassword());
 
-	            return ResponseEntity.ok("Contraseña restablecida exitosamente.");
-	        }
+			TokenUtils.deleteToken(token);
 
-	        return ResponseEntity.badRequest().body("Token de restablecimiento de contraseña inválido.");
-	    }
+			return ResponseEntity.ok("Contraseña restablecida exitosamente.");
+		}
+
+		return ResponseEntity.badRequest().body("Token de restablecimiento de contraseña inválido.");
+	}
 }

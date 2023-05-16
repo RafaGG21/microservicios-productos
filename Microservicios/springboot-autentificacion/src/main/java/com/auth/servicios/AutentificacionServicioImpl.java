@@ -81,9 +81,9 @@ public class AutentificacionServicioImpl implements IAutentificationService {
 	}
 
 	@Override
-	public UsuarioDTO editarUsuario(String email, String password) {
+	public UsuarioDTO editarPasswordUsuario(String email, String password) {
 		Usuario usuarioBBDD = autentificacionRepositorio.encontrarUsuarioPorEmail(email);
-		usuarioBBDD.setPassword(password);
+		usuarioBBDD.setPassword(encoder.encode(password));
 		Usuario usuario = autentificacionRepositorio.save(usuarioBBDD);
 		return GenericMapper.map(usuario, UsuarioDTO.class);
 	}

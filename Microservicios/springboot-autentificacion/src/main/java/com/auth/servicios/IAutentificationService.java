@@ -10,5 +10,5 @@ public interface IAutentificationService {
 	
 	public UsuarioDTO obtenerUsuarioPorEmail(String email);
 	
-	public UsuarioDTO editarUsuario(String email, String password);
+	public UsuarioDTO editarPasswordUsuario(String email, String password);
 }

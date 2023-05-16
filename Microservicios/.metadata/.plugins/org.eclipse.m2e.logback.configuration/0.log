@@ -7730,3 +7730,18 @@ org.eclipse.core.runtime.CoreException: Could not resolve artifact org.springfra
 2023-05-16 23:21:27,836 [Worker-42: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
 2023-05-16 23:21:27,849 [Worker-42: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
 2023-05-16 23:21:27,851 [Worker-42: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\rafae\Desktop\Workspace\microservicios-productos\Microservicios\springboot-autentificacion\src\test\resources
+2023-05-16 23:28:45,970 [Worker-45: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2023-05-16 23:28:45,986 [Worker-45: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2023-05-16 23:28:45,990 [Worker-45: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\rafae\Desktop\Workspace\microservicios-productos\Microservicios\springboot-autentificacion\src\test\resources
+2023-05-16 23:28:55,454 [Worker-48: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2023-05-16 23:28:55,466 [Worker-48: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2023-05-16 23:28:55,468 [Worker-48: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\rafae\Desktop\Workspace\microservicios-productos\Microservicios\springboot-autentificacion\src\test\resources
+2023-05-16 23:29:04,790 [Worker-47: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2023-05-16 23:29:04,806 [Worker-47: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2023-05-16 23:29:04,808 [Worker-47: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\rafae\Desktop\Workspace\microservicios-productos\Microservicios\springboot-autentificacion\src\test\resources
+2023-05-16 23:29:08,338 [Worker-43: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2023-05-16 23:29:08,350 [Worker-43: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2023-05-16 23:29:08,353 [Worker-43: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\rafae\Desktop\Workspace\microservicios-productos\Microservicios\springboot-autentificacion\src\test\resources
+2023-05-16 23:29:29,838 [Worker-49: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2023-05-16 23:29:29,851 [Worker-49: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2023-05-16 23:29:29,854 [Worker-49: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\rafae\Desktop\Workspace\microservicios-productos\Microservicios\springboot-autentificacion\src\test\resources
