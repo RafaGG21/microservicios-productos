@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.GetMapping"/>
-    <fullyQualifiedTypeName name="org.springframework.mail.javamail.JavaMailSender"/>
-    <fullyQualifiedTypeName name="org.springframework.mail.javamail.JavaMailSenderImpl"/>
-    <fullyQualifiedTypeName name="java.util.Properties"/>
-    <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Value"/>
-    <fullyQualifiedTypeName name="jakarta.mail.internet.InternetAddress"/>
-    <fullyQualifiedTypeName name="jakarta.mail.internet.AddressException"/>
-    <fullyQualifiedTypeName name="java.lang.System"/>
     <fullyQualifiedTypeName name="io.github.cdimascio.dotenv.Dotenv"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.CrossOrigin"/>
@@ -19,8 +11,6 @@
     <fullyQualifiedTypeName name="com.commons.dto.ResponseDTO"/>
     <fullyQualifiedTypeName name="com.commons.dto.ProductoDTO"/>
     <fullyQualifiedTypeName name="java.util.stream.Collectors"/>
-    <fullyQualifiedTypeName name="java.util.List"/>
-    <fullyQualifiedTypeName name="org.springframework.data.repository.query.Param"/>
     <fullyQualifiedTypeName name="org.springframework.security.core.Authentication"/>
     <fullyQualifiedTypeName name="org.springframework.security.authentication.AuthenticationManager"/>
     <fullyQualifiedTypeName name="com.auth.utils.JwtUtils"/>
@@ -37,13 +27,11 @@
     <fullyQualifiedTypeName name="java.lang.String"/>
     <fullyQualifiedTypeName name="org.apache.catalina.User"/>
     <fullyQualifiedTypeName name="com.commons.entidades.Usuario"/>
-    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestParam"/>
     <fullyQualifiedTypeName name="org.apache.http.HttpEntity"/>
     <fullyQualifiedTypeName name="org.springframework.http.HttpEntity"/>
     <fullyQualifiedTypeName name="org.springframework.cloud.openfeign.FeignClient"/>
     <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
     <fullyQualifiedTypeName name="clientes.ClienteEmail"/>
-    <fullyQualifiedTypeName name="com.commons.mapper.GenericMapper"/>
     <fullyQualifiedTypeName name="org.springframework.context.annotation.ComponentScan"/>
     <fullyQualifiedTypeName name="org.springframework.http.HttpHeaders"/>
     <fullyQualifiedTypeName name="org.springframework.http.MediaType"/>
@@ -57,7 +45,19 @@
     <fullyQualifiedTypeName name="org.springframework.boot.autoconfigure.ImportAutoConfiguration"/>
     <fullyQualifiedTypeName name="org.springframework.cloud.openfeign.FeignAutoConfiguration"/>
     <fullyQualifiedTypeName name="org.springframework.cloud.openfeign.EnableFeignClients"/>
-    <fullyQualifiedTypeName name="org.springframework.http.ResponseEntity"/>
     <fullyQualifiedTypeName name="com.commons.dto.UsuarioDTO"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PathVariable"/>
+    <fullyQualifiedTypeName name="org.springframework.data.repository.query.Param"/>
+    <fullyQualifiedTypeName name="java.lang.Integer"/>
+    <fullyQualifiedTypeName name="com.emails.jwt.JwtUtils"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestParam"/>
+    <fullyQualifiedTypeName name="com.emails.jwt.TokenUtils"/>
+    <fullyQualifiedTypeName name="org.springframework.http.ResponseEntity"/>
+    <fullyQualifiedTypeName name="com.commons.utils.TokenUtils"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="com.commons.dto.RequestPasswordDTO"/>
+    <fullyQualifiedTypeName name="com.commons.dto.ResetPasswordDto"/>
+    <fullyQualifiedTypeName name="com.commons.mapper.GenericMapper"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.GetMapping"/>
 </qualifiedTypeNameHistroy>

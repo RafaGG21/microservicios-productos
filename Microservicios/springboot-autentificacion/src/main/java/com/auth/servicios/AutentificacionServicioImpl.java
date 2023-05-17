@@ -1,18 +1,22 @@
 package com.auth.servicios;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.auth.repositorio.IAutentificacionRepositorio;
 import com.commons.dto.UsuarioDTO;
+import com.commons.dto.UsuarioTokenDTO;
 import com.commons.entidades.Usuario;
 import com.commons.mapper.GenericMapper;
+import java.time.LocalDateTime;
 
 @Service
 public class AutentificacionServicioImpl implements IAutentificationService {
@@ -34,9 +38,6 @@ public class AutentificacionServicioImpl implements IAutentificationService {
 		try {
 			Usuario usuario = autentificacionRepositorio.encontrarUsuarioPorEmail(email);
 			if (usuario != null && encoder.matches(password, usuario.getPassword())) {
-				// List<GrantedAuthority> roles = usuario.getRoles().stream().map(rol -> new
-				// SimpleGrantedAuthority(rol.getNombre())).peek(authority ->
-				// authority.getAuthority()).collect(Collectors.toList());
 				usuarioDTO = GenericMapper.map(usuario, UsuarioDTO.class);
 			}
 
@@ -51,9 +52,9 @@ public class AutentificacionServicioImpl implements IAutentificationService {
 		UsuarioDTO usuarioDTO = null;
 		try {
 			Usuario usuario = autentificacionRepositorio.encontrarUsuarioPorEmail(email);
-			
+			if (usuario != null) {
 			usuarioDTO = GenericMapper.map(usuario, UsuarioDTO.class);
-			
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -98,6 +99,23 @@ public class AutentificacionServicioImpl implements IAutentificationService {
 			
 		}
 		return null;
+	}
+
+	@Override
+	public UsuarioTokenDTO obtenerUsuarioPorToken(String token) {
+		UsuarioTokenDTO usuarioToken = new UsuarioTokenDTO();
+		Pageable pageable = PageRequest.of(0, 1);
+		List<Object[]> result = autentificacionRepositorio.buscarUsuarioMasRecientePorToken(token, pageable);
+		for (Object[] tab : result) {
+			usuarioToken.setIdUsuario((Long) tab[0]);
+			usuarioToken.setNombre((String) tab[1]);
+			usuarioToken.setEmail((String) tab[2]);
+			usuarioToken.setIdToken((Long) tab[3]);
+			usuarioToken.setToken((String) tab[4]);
+			usuarioToken.setFechaCreacion((Date) tab[5]);
+		}
+
+		return usuarioToken;
 	}
 	
 

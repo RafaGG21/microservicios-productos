@@ -17,7 +17,7 @@ import com.commons.dto.RequestPasswordDTO;
 import com.commons.dto.ResetPasswordDto;
 import com.commons.dto.ResponseDTO;
 import com.commons.dto.UsuarioDTO;
-
+import com.commons.dto.UsuarioTokenDTO;
 import com.commons.utils.TokenUtils;
 
 @RestController
@@ -29,6 +29,9 @@ public class AutentificacionControlador {
 
 	@Autowired
 	private ClienteEmail clienteEmail;
+	
+	@Autowired
+	private IClienteToken clienteToken;
 
 	@PostMapping("/login")
 	public ResponseEntity<ResponseDTO> login(@RequestBody UsuarioDTO usuarioDTO) {
@@ -104,17 +107,16 @@ public class AutentificacionControlador {
 
 	}
 
-	@PostMapping("/reset-password")
-	public ResponseEntity<String> resetPassword(@RequestParam("token") String token,
-			@RequestBody ResetPasswordDto resetPasswordDto) {
-
-		if (TokenUtils.isTokenValid(token)) {
-			autentificationService.editarPasswordUsuario(resetPasswordDto.getEmail(), resetPasswordDto.getPassword());
-			TokenUtils.deleteToken(token);
-			return ResponseEntity.ok("Contraseña restablecida exitosamente.");
+	@GetMapping("/reset-password")
+	public ResponseEntity<String> resetPassword(@RequestParam("token") String token) {
+		UsuarioTokenDTO usuarioTokenDTO = autentificationService.obtenerUsuarioPorToken(token);	
+		if (usuarioTokenDTO != null && TokenUtils.isTokenValid(usuarioTokenDTO.getFechaCreacion())) {
+			clienteToken.eliminarToken(usuarioTokenDTO.getIdToken());
+			return ResponseEntity.ok("Solicitud restablecer contraseña realizada correctamente");
 		}
 		return ResponseEntity.badRequest().body("Token de restablecimiento de contraseña inválido.");
 	}
+	
 
 	@GetMapping("/email/{email}")
 	public ResponseEntity<UsuarioDTO> getUsuarioPorEmail(@RequestBody UsuarioDTO usuarioDTO) {

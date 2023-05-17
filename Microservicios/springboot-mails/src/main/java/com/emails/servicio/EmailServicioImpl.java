@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
+
+import com.commons.dto.TokenAutenticarDTO;
 import com.commons.dto.UsuarioDTO;
 import com.commons.entidades.Email;
 import com.commons.utils.TokenUtils;
+import com.emails.controlador.IClienteToken;
 import com.emails.repositorio.IEmailRepositorio;
 
 import jakarta.mail.internet.AddressException;
@@ -22,9 +24,9 @@ public class EmailServicioImpl implements IEmailServicio{
 	
 	@Autowired
 	private JavaMailSender emailSender;
-	
+		
 	@Autowired
-	private TokenUtils tokenUtils;
+	private IClienteToken clienteToken;
 	
 	@Override
 	public boolean enviarEmailRegistro(UsuarioDTO usuarioDTO) {
@@ -51,9 +53,10 @@ public class EmailServicioImpl implements IEmailServicio{
 			Email email = emailRepositorio.buscarEmailPorTipo("restablecer");
 			String cuerpoEmail = email.getCuerpo();
 			cuerpoEmail = cuerpoEmail.replace("<nombre>", usuarioDTO.getNombre());
-			String token = TokenUtils.generateToken();
-			String url = "http://localhost:8087/restablecer-contrasena?token=";
-			url += token;
+			TokenAutenticarDTO token = TokenUtils.generateToken(usuarioDTO.getId());
+			clienteToken.guardarToken(token);
+			String url = "http://localhost:8085/reset-password?token=";
+			url += token.getToken();
 			cuerpoEmail = cuerpoEmail.replace("<url>", url);
 			SimpleMailMessage message = new SimpleMailMessage();
 			message.setTo(usuarioDTO.getEmail());

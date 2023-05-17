@@ -1,6 +1,7 @@
 package com.auth.servicios;
 
 import com.commons.dto.UsuarioDTO;
+import com.commons.dto.UsuarioTokenDTO;
 
 public interface IAutentificationService {
 
@@ -13,4 +14,6 @@ public interface IAutentificationService {
 	public UsuarioDTO editarPasswordUsuario(String email, String password);
 
 	public UsuarioDTO editarUsuario(UsuarioDTO usuarioDTO);
+	
+	public UsuarioTokenDTO obtenerUsuarioPorToken(String token);
 }

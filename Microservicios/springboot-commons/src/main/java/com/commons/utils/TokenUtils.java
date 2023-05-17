@@ -1,38 +1,35 @@
 package com.commons.utils;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.Date;
 import java.util.UUID;
+
+import com.commons.dto.TokenAutenticarDTO;
+
+
 
 public class TokenUtils {
 
-	private static List<String> resetPasswordTokens = new ArrayList<>();
 
-
-    public static void deleteToken(String token) {
-        resetPasswordTokens.remove(token);
-    }
-	
-    public static String generateToken() {
-        String token = UUID.randomUUID().toString();
-        resetPasswordTokens.add(token);
-        return token;
+    public static TokenAutenticarDTO generateToken(Long id) {
+    	TokenAutenticarDTO token = new TokenAutenticarDTO();
+    	token.setIdUsuario(id);
+    	Date fecha = new Date();
+    	token.setFechaCreacion(fecha);
+    	token.setToken(UUID.randomUUID().toString());
+    	return token;
     }
 
-    public static boolean isTokenValid(String token) {
-        // Verificar si el token ha expirado
-        LocalDateTime expirationDate = getExpirationDate(token);
-        LocalDateTime now = LocalDateTime.now();
-        boolean tokenEnListaTokens = !resetPasswordTokens.isEmpty() ? 
-        		resetPasswordTokens.stream().anyMatch(t -> t.equals(token)) : false;
-        return tokenEnListaTokens && now.isBefore(expirationDate);
+    public static boolean isTokenValid(Date fechaToken) {
+    	long diferenciaMilisegundos = fechaToken.getTime() - new Date().getTime();
+    	long diferenciaDias = diferenciaMilisegundos / 86400000;
+
+    	if (diferenciaDias >= 1) {
+    		return false;
+    	} else {
+    	   return true;
+    	}
+  
     }
 
-    private static LocalDateTime getExpirationDate(String token) {
-        // Establecer la fecha de expiración del token (por ejemplo, 24 horas después de su generación)
-        LocalDateTime expirationDate = LocalDateTime.now().plus(24, ChronoUnit.HOURS);
-        return expirationDate;
-    }
 }
