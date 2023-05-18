@@ -22,6 +22,6 @@ public interface IAutentificacionRepositorio extends JpaRepository<Usuario, Long
 	@Query(value = "select email, nombre from productos_db.usuarios where nombre = ? ", nativeQuery = true)
 	public Usuario encontrarEmailporNombre(String nombre);
 
-	@Query("SELECT u.id, u.nombre, u.email, t.id, t.token, t.fechaCreacion FROM Usuario u INNER JOIN TokenAutenticar t WHERE u.id = t.idUsuario AND  t.token = :token ORDER BY t.fechaCreacion DESC")
+	@Query(value = "SELECT u.id, u.nombre, u.email, t.id, t.token, t.fecha_creacion FROM usuarios u INNER JOIN tokens_autenticar t ON u.id = t.usuario_id WHERE t.token = :token ORDER BY t.fecha_creacion DESC", nativeQuery = true)
 	public List<Object[]> buscarUsuarioMasRecientePorToken(@Param("token") String token, Pageable pageable);
 }

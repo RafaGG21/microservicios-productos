@@ -108,13 +108,13 @@ public class AutentificacionControlador {
 	}
 
 	@GetMapping("/reset-password")
-	public ResponseEntity<String> resetPassword(@RequestParam("token") String token) {
+	public ResponseEntity<UsuarioTokenDTO> resetPassword(@RequestParam("token") String token) {
 		UsuarioTokenDTO usuarioTokenDTO = autentificationService.obtenerUsuarioPorToken(token);	
 		if (usuarioTokenDTO != null && TokenUtils.isTokenValid(usuarioTokenDTO.getFechaCreacion())) {
 			clienteToken.eliminarToken(usuarioTokenDTO.getIdToken());
-			return ResponseEntity.ok("Solicitud restablecer contraseña realizada correctamente");
+			return ResponseEntity.ok(usuarioTokenDTO);
 		}
-		return ResponseEntity.badRequest().body("Token de restablecimiento de contraseña inválido.");
+		return ResponseEntity.badRequest().build();
 	}
 	
 

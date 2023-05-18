@@ -1,12 +1,15 @@
 package com.commons.entidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 
@@ -20,7 +23,7 @@ public class Usuario implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long id;
+	private Long id;
 	private String nombre;
 
 	@Column(unique = true)
@@ -28,6 +31,9 @@ public class Usuario implements Serializable {
 	private String password;
 	private String imagen;
 
+	@OneToMany(mappedBy="usuario")
+	private List<TokenAutenticar> listaTokens = new ArrayList<>();
+	
 	public Long getId() {
 		return id;
 	}

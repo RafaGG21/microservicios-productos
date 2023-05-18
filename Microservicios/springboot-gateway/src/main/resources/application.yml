@@ -20,3 +20,15 @@ spring:
         - Path=/auth/**
         filters:
         - StripPrefix=1
+      - id: servicio-emails
+        uri: lb://servicio-emails
+        predicates:
+        - Path=/emails/**
+        filters:
+        - StripPrefix=1
+      - id: servicio-tokens
+        uri: lb://servicio-tokens
+        predicates:
+        - Path=/tokens/**
+        filters:
+        - StripPrefix=1

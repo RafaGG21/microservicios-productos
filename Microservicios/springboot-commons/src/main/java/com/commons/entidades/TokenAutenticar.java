@@ -4,11 +4,12 @@ import java.sql.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 
@@ -26,10 +27,10 @@ public class TokenAutenticar {
 	@Column(name="fecha_creacion", nullable = false)
 	private Date fechaCreacion;
 
-	@Column(name="usuario_id")
-	private Long idUsuario;
+	@ManyToOne(fetch= FetchType.LAZY, optional = false)
+	@JoinColumn(name = "usuario_id")
+	private Usuario usuario;
 	
-
 	public Long getId() {
 		return id;
 	}
@@ -54,14 +55,14 @@ public class TokenAutenticar {
 		this.fechaCreacion = fechaCreacion;
 	}
 
-
-	public Long getIdUsuario() {
-		return idUsuario;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setIdUsuario(Long idUsuario) {
-		this.idUsuario = idUsuario;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
+
 	
 	
 }
