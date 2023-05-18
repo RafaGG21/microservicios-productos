@@ -107,14 +107,14 @@ public class AutentificacionControlador {
 
 	}
 
-	@GetMapping("/reset-password")
-	public ResponseEntity<UsuarioTokenDTO> resetPassword(@RequestParam("token") String token) {
+	@GetMapping("/cambiar-password")
+	public UsuarioTokenDTO resetPassword(@RequestParam("token") String token) {
 		UsuarioTokenDTO usuarioTokenDTO = autentificationService.obtenerUsuarioPorToken(token);	
 		if (usuarioTokenDTO != null && TokenUtils.isTokenValid(usuarioTokenDTO.getFechaCreacion())) {
 			clienteToken.eliminarToken(usuarioTokenDTO.getIdToken());
-			return ResponseEntity.ok(usuarioTokenDTO);
+			return usuarioTokenDTO;
 		}
-		return ResponseEntity.badRequest().build();
+		return null;
 	}
 	
 

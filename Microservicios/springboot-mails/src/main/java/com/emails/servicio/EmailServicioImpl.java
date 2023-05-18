@@ -55,7 +55,7 @@ public class EmailServicioImpl implements IEmailServicio{
 			cuerpoEmail = cuerpoEmail.replace("<nombre>", usuarioDTO.getNombre());
 			TokenAutenticarDTO token = TokenUtils.generateToken(usuarioDTO.getId());
 			clienteToken.guardarToken(token);
-			String url = "http://localhost:8085/reset-password?token=";
+			String url = "http://localhost:4200/cambiar-password?token=";
 			url += token.getToken();
 			cuerpoEmail = cuerpoEmail.replace("<url>", url);
 			SimpleMailMessage message = new SimpleMailMessage();
