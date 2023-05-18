@@ -11,5 +11,5 @@ public interface ClienteEmail {
 
 	
 	@PostMapping("/restablecer")
-	String emailPorRestablecerPassword(@RequestBody UsuarioDTO usuarioDTO);
+	public String emailPorRestablecerPassword(@RequestBody UsuarioDTO usuarioDTO);
 }
