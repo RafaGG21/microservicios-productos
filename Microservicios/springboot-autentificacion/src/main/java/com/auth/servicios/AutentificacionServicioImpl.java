@@ -82,17 +82,20 @@ public class AutentificacionServicioImpl implements IAutentificationService {
 	}
 
 	@Override
-	public UsuarioDTO editarPasswordUsuario(String email, String password) {
-		Usuario usuarioBBDD = autentificacionRepositorio.encontrarUsuarioPorEmail(email);
-		usuarioBBDD.setPassword(encoder.encode(password));
-		Usuario usuario = autentificacionRepositorio.save(usuarioBBDD);
-		return GenericMapper.map(usuario, UsuarioDTO.class);
+	public UsuarioDTO editarPasswordUsuario(UsuarioDTO usuarioDTO) {
+		Usuario usuarioBBDD = autentificacionRepositorio.encontrarUsuarioPorEmail(usuarioDTO.getEmail());
+		if (usuarioBBDD != null) {
+			usuarioBBDD.setPassword(encoder.encode(usuarioDTO.getPassword()));
+		}
+		autentificacionRepositorio.save(usuarioBBDD);
+		return GenericMapper.map(usuarioBBDD, UsuarioDTO.class);
 	}
 	
 	@Override
 	public UsuarioDTO editarUsuario(UsuarioDTO usuarioDTO) {
 		Usuario usuarioBBDD = autentificacionRepositorio.encontrarUsuarioPorEmail(usuarioDTO.getEmail());
 		if(usuarioBBDD != null) {
+			usuarioDTO.setId(usuarioBBDD.getId());
 			Usuario usuarioEditado = GenericMapper.map(usuarioDTO, Usuario.class);
 			Usuario usuarioGuardar = autentificacionRepositorio.save(usuarioEditado);
 			return GenericMapper.map(usuarioGuardar, UsuarioDTO.class);

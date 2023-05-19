@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -81,13 +82,16 @@ public class AutentificacionControlador {
 		}
 	}
 
-	@PutMapping("editar/{email}")
-	public ResponseEntity<UsuarioDTO> editarUsuario(@RequestBody UsuarioDTO usuarioDTO) {
-		UsuarioDTO usuarioEditado = autentificationService.editarUsuario(usuarioDTO);
+	@PutMapping("editar-password/{id}")
+	public ResponseEntity<ResponseDTO> editarUsuario(@PathVariable Long id, @RequestBody UsuarioDTO usuarioDTO) {
+		UsuarioDTO usuarioEditado = autentificationService.editarPasswordUsuario(usuarioDTO);
+		ResponseDTO response = new ResponseDTO();
 		if (usuarioEditado == null) {
-			return ResponseEntity.badRequest().build();
-		} else {
-			return ResponseEntity.ok().body(usuarioEditado);
+			response.setCorrecto(false);
+			return ResponseEntity.badRequest().body(response);
+		} else {	
+			response.setCorrecto(true);
+			return ResponseEntity.ok().body(response);
 		}
 
 	}
