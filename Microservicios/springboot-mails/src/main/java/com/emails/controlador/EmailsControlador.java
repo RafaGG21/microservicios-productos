@@ -1,12 +1,14 @@
 package com.emails.controlador;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.commons.dto.ResponseDTO;
 import com.commons.dto.UsuarioDTO;
 import com.emails.servicio.IEmailServicio;
 
@@ -18,14 +20,29 @@ public class EmailsControlador {
 	private IEmailServicio emailServicio;
 	
 	@PostMapping("/registrado")
-	public String emailPorRegistro(@RequestBody UsuarioDTO usuarioDTO) {
+	public ResponseEntity<ResponseDTO> emailPorRegistro(@RequestBody UsuarioDTO usuarioDTO) {
 		boolean enviadoConExito = emailServicio.enviarEmailRegistro(usuarioDTO);
-		return enviadoConExito ?  "Email enviado con exito " :  "Email no enviado";
+		ResponseDTO response = new ResponseDTO();
+		if (enviadoConExito) {
+			response.setCorrecto(false);
+			return ResponseEntity.badRequest().body(response);
+		} else {	
+			response.setCorrecto(true);
+			return ResponseEntity.ok().body(response);
+		}
 	}
 	
 	@PostMapping("/restablecer")
-	public String emailPorRestablecerPassword(@RequestBody UsuarioDTO usuarioDTO) {
+	public ResponseEntity<ResponseDTO> emailPorRestablecerPassword(@RequestBody UsuarioDTO usuarioDTO) {
 		boolean enviadoConExito = emailServicio.enviarEmailRestablecerPassword(usuarioDTO);
-		return enviadoConExito ?  "Email enviado con exito " :  "Email no enviado";
+		ResponseDTO response = new ResponseDTO();
+		if (enviadoConExito) {
+			response.setCorrecto(true);
+			return ResponseEntity.ok().body(response);
+		} else {	
+			response.setCorrecto(false);
+			return ResponseEntity.badRequest().body(response);
+		}
+
 	}
 }
