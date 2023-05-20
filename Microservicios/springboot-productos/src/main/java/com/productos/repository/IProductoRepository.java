@@ -15,4 +15,9 @@ public interface IProductoRepository extends CrudRepository<Producto, Long>{
 	@Query(value = "SELECT * FROM productos_db.productos WHERE nombre LIKE concat('%', :termino, '%')", nativeQuery = true)
 	public List<Producto> buscarProductoPorTermino(@Param("termino") String termino);
 
+	@Query(value = "SELECT * FROM productos WHERE genero = ?1", nativeQuery = true)
+	public List<Producto> buscarProductoPorGenero(String genero);
+	
+	@Query(value = "SELECT * FROM productos WHERE categoria = ?1", nativeQuery = true)
+	public List<Producto> buscarProductoPorCategoria(String categoria);
 }

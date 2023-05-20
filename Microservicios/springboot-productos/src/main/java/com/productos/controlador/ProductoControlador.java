@@ -53,5 +53,26 @@ public class ProductoControlador {
 			return ResponseEntity.ok().body(producto);
 		}
 	}
+	
+	@GetMapping("/por-genero/{genero}")
+    public ResponseEntity<List<ProductoDTO>> getProductosPorGenero(@PathVariable String genero) {
+		List <ProductoDTO> productos =  productoServicio.encontrarProductoPorGenero(genero);
+        
+        if(productos.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		} else {
+			return ResponseEntity.ok().body(productos);
+		}
+    }
 
+	@GetMapping("/por-categoria/{categoria}")
+    public ResponseEntity<List<ProductoDTO>> getProductosPorCategoria(@PathVariable String categoria) {
+		List <ProductoDTO> productos =  productoServicio.encontrarProductoPorCategoria(categoria);
+        
+        if(productos.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		} else {
+			return ResponseEntity.ok().body(productos);
+		}
+    }
 }

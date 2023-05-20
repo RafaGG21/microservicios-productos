@@ -1,5 +1,0 @@
-package com.items.repositorio;
-
-public interface IRepositorioItem {
-
-}

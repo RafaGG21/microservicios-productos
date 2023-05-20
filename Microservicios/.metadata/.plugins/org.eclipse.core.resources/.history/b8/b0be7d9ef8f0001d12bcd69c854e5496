@@ -1,9 +1,0 @@
-package com.productos.repository;
-
-import org.springframework.data.repository.CrudRepository;
-
-import springboot-commons-productos-0.0.1-SNAPSHOT.Producto;
-
-public interface IProductoRepository extends CrudRepository<Producto, Long>{
-
-}

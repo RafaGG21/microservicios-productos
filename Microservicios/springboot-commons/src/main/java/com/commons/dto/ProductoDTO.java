@@ -13,7 +13,10 @@ public class ProductoDTO implements Serializable{
 	private Long id;
 	private String nombre;
 	private Double precio;
+	private String genero;
+	private String categoria;
 	private String imagen;
+	private String descripcion;
 
 	public Long getId() {
 		return id;
@@ -46,4 +49,30 @@ public class ProductoDTO implements Serializable{
 	public void setImagen(String imagen) {
 		this.imagen = imagen;
 	}
+
+	public String getGenero() {
+		return genero;
+	}
+
+	public void setGenero(String genero) {
+		this.genero = genero;
+	}
+
+	public String getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+	
+	
 }

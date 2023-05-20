@@ -17,4 +17,8 @@ public interface IProductoServicio {
 	public void eliminarProductoPorId(Long id);
 
 	public List<ProductoDTO> encontrarProductoPorTermino(String termino);
+	
+	public List<ProductoDTO> encontrarProductoPorGenero(String genero);
+	
+	public List<ProductoDTO> encontrarProductoPorCategoria(String categoria);
 }

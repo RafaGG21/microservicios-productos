@@ -63,5 +63,29 @@ public class ProductoServiceImpl implements IProductoServicio{
 		}
 	}
 
+	@Override
+	public List<ProductoDTO> encontrarProductoPorGenero(String genero) {
+		List<Producto> producto = productoRepository.buscarProductoPorGenero(genero);
+		if (producto == null) {
+			return null;
+		} else {
+			return producto.stream().map(p -> GenericMapper.map(p, ProductoDTO.class))
+					.collect(Collectors.toList());
+
+		}
+	}
+
+	@Override
+	public List<ProductoDTO> encontrarProductoPorCategoria(String categoria) {
+		List<Producto> productos = productoRepository.buscarProductoPorCategoria(categoria);
+		if (productos == null) {
+			return null;
+		} else {
+			return productos.stream().map(p -> GenericMapper.map(p, ProductoDTO.class))
+					.collect(Collectors.toList());
+
+		}
+	}
+
 
 }
