@@ -33,6 +33,11 @@ public class ProductoControlador {
 	public ProductoDTO encontrarProductoPorId(@PathVariable Long id) {
 		return productoServicio.encontrarProductoPorId(id);
 	}
+	
+	@GetMapping("ver/nombre/{nombre}")
+	public ProductoDTO encontrarProductoPorNombre(@PathVariable String nombre) {
+		return productoServicio.encontrarProductoPorNombre(nombre);
+	}
 
 	@PostMapping("/crear")
 	public ProductoDTO guardarProducto(@RequestBody ProductoDTO producto) {

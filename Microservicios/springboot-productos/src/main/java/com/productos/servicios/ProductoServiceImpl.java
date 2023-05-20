@@ -86,6 +86,17 @@ public class ProductoServiceImpl implements IProductoServicio{
 
 		}
 	}
+	
+	@Override
+	public ProductoDTO encontrarProductoPorNombre(String nombre) {
+		Producto producto = productoRepository.buscarProductoPorNombre(nombre);
+		if (producto == null) {
+			return null;
+		} else {
+			return GenericMapper.map(producto, ProductoDTO.class);
+
+		}
+	}
 
 
 }

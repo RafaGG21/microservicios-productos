@@ -20,4 +20,7 @@ public interface IProductoRepository extends CrudRepository<Producto, Long>{
 	
 	@Query(value = "SELECT * FROM productos WHERE categoria = ?1", nativeQuery = true)
 	public List<Producto> buscarProductoPorCategoria(String categoria);
+	
+	@Query(value = "SELECT * FROM productos WHERE nombre = ?1", nativeQuery = true)
+	public Producto buscarProductoPorNombre(String nombre);
 }
