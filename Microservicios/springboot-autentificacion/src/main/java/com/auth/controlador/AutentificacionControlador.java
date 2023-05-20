@@ -95,6 +95,20 @@ public class AutentificacionControlador {
 		}
 
 	}
+	
+	@PutMapping("editar-usuario/{id}")
+	public ResponseEntity<UsuarioDTO> editarUsuarioImagen(@PathVariable Long id, @RequestBody UsuarioDTO usuarioDTO) {
+		UsuarioDTO usuarioEditado = autentificationService.editarUsuario(id, usuarioDTO);
+		ResponseDTO response = new ResponseDTO();
+		if (usuarioEditado == null) {
+			response.setCorrecto(false);
+			return ResponseEntity.badRequest().build();
+		} else {	
+			response.setCorrecto(true);
+			return ResponseEntity.ok().body(usuarioEditado);
+		}
+
+	}
 
 	@PostMapping("/request")
 	public ResponseEntity<String> requestPasswordReset(@RequestBody RequestPasswordDTO requestPasswordDTO) {
@@ -123,13 +137,13 @@ public class AutentificacionControlador {
 	
 
 	@GetMapping("/email/{email}")
-	public ResponseEntity<UsuarioDTO> getUsuarioPorEmail(@RequestBody UsuarioDTO usuarioDTO) {
-		UsuarioDTO usuario = autentificationService.obtenerUsuarioPorEmail(usuarioDTO.getEmail());
+	public ResponseEntity<UsuarioDTO> getUsuarioPorEmail(@PathVariable String email) {
+		UsuarioDTO usuario = autentificationService.obtenerUsuarioPorEmail(email);
 		if (usuario == null) {
 			return ResponseEntity.notFound().build();
 		} else {
 
-			return ResponseEntity.ok().body(usuarioDTO);
+			return ResponseEntity.ok().body(usuario);
 		}
 
 	}

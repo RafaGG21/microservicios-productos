@@ -92,12 +92,12 @@ public class AutentificacionServicioImpl implements IAutentificationService {
 	}
 	
 	@Override
-	public UsuarioDTO editarUsuario(UsuarioDTO usuarioDTO) {
-		Usuario usuarioBBDD = autentificacionRepositorio.encontrarUsuarioPorEmail(usuarioDTO.getEmail());
+	public UsuarioDTO editarUsuario(Long id, UsuarioDTO usuarioDTO) {
+		Usuario usuarioBBDD = autentificacionRepositorio.findById(id).orElse(null);
 		if(usuarioBBDD != null) {
-			usuarioDTO.setId(usuarioBBDD.getId());
-			Usuario usuarioEditado = GenericMapper.map(usuarioDTO, Usuario.class);
-			Usuario usuarioGuardar = autentificacionRepositorio.save(usuarioEditado);
+			usuarioBBDD.setNombre(usuarioDTO.getNombre());
+			usuarioBBDD.setImagen(usuarioDTO.getImagen());
+			Usuario usuarioGuardar = autentificacionRepositorio.save(usuarioBBDD);
 			return GenericMapper.map(usuarioGuardar, UsuarioDTO.class);
 			
 		}

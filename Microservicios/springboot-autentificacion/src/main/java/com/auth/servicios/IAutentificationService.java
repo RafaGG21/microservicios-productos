@@ -12,10 +12,10 @@ public interface IAutentificationService {
 	public UsuarioDTO obtenerUsuarioPorEmail(String email);
 	
 	public UsuarioDTO editarPasswordUsuario(UsuarioDTO usuarioDT);
-
-	public UsuarioDTO editarUsuario(UsuarioDTO usuarioDTO);
 	
 	public UsuarioTokenDTO obtenerUsuarioPorToken(String token);
+
+	public UsuarioDTO editarUsuario(Long id, UsuarioDTO usuarioDTO);
 
 	
 }
