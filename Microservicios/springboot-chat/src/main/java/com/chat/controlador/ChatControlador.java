@@ -1,5 +1,7 @@
 package com.chat.controlador;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.ResponseEntity;
@@ -43,5 +45,10 @@ public class ChatControlador {
 		MensajeDTO mensajeCreado = mensajeServicio.crearMensaje(mensajeDTO);
 		return mensajeCreado != null ? ResponseEntity.ok(mensajeCreado) : ResponseEntity.notFound().build();
 	}
-
+	
+	@GetMapping("/mensajesPorChat/{chatId}")
+	public ResponseEntity<List<MensajeDTO>> getMensajesPorChat(@PathVariable Long chatId){
+		List<MensajeDTO> mensajesChat = mensajeServicio.getMensajesChat(chatId);
+		return mensajesChat != null ? ResponseEntity.ok(mensajesChat) : ResponseEntity.notFound().build();
+	}
 }
