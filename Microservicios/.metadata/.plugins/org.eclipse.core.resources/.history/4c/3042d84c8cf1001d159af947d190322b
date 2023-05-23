@@ -1,3 +1,0 @@
-INSERT INTO items (id, cantidad, idProducto) VALUES
-(1, 2, 1);
-
