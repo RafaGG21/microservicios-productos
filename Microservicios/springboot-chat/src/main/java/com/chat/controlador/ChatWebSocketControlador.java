@@ -11,9 +11,9 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import com.chat.repositorio.IChatRepositorio;
 import com.chat.repositorio.IMensajeRepositorio;
 
-import com.commons.entidades.Chat;
+
 import com.commons.entidades.Mensaje;
-import com.commons.entidades.Usuario;
+
 
 public class ChatWebSocketControlador extends TextWebSocketHandler {
 

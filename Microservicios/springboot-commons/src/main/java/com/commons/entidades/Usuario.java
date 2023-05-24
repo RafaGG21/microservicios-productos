@@ -39,6 +39,8 @@ public class Usuario implements Serializable {
 	@OneToMany(mappedBy="usuario")
 	private List<TokenAutenticar> listaTokens = new ArrayList<>();
 	
+	@OneToMany(mappedBy="usuario")
+	private List<Producto> listaProductos = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -78,6 +80,23 @@ public class Usuario implements Serializable {
 
 	public void setImagen(String imagen) {
 		this.imagen = imagen;
+	}
+	
+	
+	public List<TokenAutenticar> getListaTokens() {
+		return listaTokens;
+	}
+
+	public void setListaTokens(List<TokenAutenticar> listaTokens) {
+		this.listaTokens = listaTokens;
+	}
+
+	public List<Producto> getListaProductos() {
+		return listaProductos;
+	}
+
+	public void setListaProductos(List<Producto> listaProductos) {
+		this.listaProductos = listaProductos;
 	}
 
 	public Usuario(Long id, String nombre, String email, String password, String imagen) {

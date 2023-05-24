@@ -17,7 +17,11 @@ public class ProductoDTO implements Serializable{
 	private String categoria;
 	private String imagen;
 	private String descripcion;
-
+	private Long id_usuario;
+	private String nombreUsuario;
+	private String emailUsuario;
+	private String imagenUsuario;
+	
 	public Long getId() {
 		return id;
 	}
@@ -73,6 +77,47 @@ public class ProductoDTO implements Serializable{
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+
+	public Long getIdUsuario() {
+		return id_usuario;
+	}
+
+	public void setIdUsuario(Long id_usuario) {
+		this.id_usuario = id_usuario;
+	}
+
+	public Long getId_usuario() {
+		return id_usuario;
+	}
+
+	public void setId_usuario(Long id_usuario) {
+		this.id_usuario = id_usuario;
+	}
+
+	public String getNombreUsuario() {
+		return nombreUsuario;
+	}
+
+	public void setNombreUsuario(String nombreUsuario) {
+		this.nombreUsuario = nombreUsuario;
+	}
+
+	public String getEmailUsuario() {
+		return emailUsuario;
+	}
+
+	public void setEmailUsuario(String emailUsuario) {
+		this.emailUsuario = emailUsuario;
+	}
+
+	public String getImagenUsuario() {
+		return imagenUsuario;
+	}
+
+	public void setImagenUsuario(String imagenUsuario) {
+		this.imagenUsuario = imagenUsuario;
+	}
+	
 	
 	
 }

@@ -23,6 +23,7 @@ public class ProductoServiceImpl implements IProductoServicio{
 	@Transactional(readOnly = true)
 	public List<ProductoDTO> listarProductos() {
 		List<ProductoDTO> listaProductosDTO = new ArrayList<>();
+		 
 		for (Producto producto : productoRepository.findAll()) {
 			listaProductosDTO.add(GenericMapper.map(producto,ProductoDTO.class ));
 		}
@@ -31,12 +32,21 @@ public class ProductoServiceImpl implements IProductoServicio{
 
 	@Override	
 	public ProductoDTO encontrarProductoPorId(Long id) {
-		Producto producto = productoRepository.findById(id).orElse(null);
-		if (producto == null) {
-			return null;
-		} else {
-			return GenericMapper.map(producto, ProductoDTO.class);
-		}
+		List<Object[]> producto = productoRepository.getProductoYUsuarioPorId(id);
+		 ProductoDTO productoDTO = new ProductoDTO();
+		for (Object[] row : producto) {
+			productoDTO.setId((Long) row[0]);
+			productoDTO.setNombre((String) row[1]);
+			productoDTO.setPrecio((Double) row[2]);
+			productoDTO.setGenero((String) row[3]);
+			productoDTO.setCategoria((String) row[4]);
+			productoDTO.setImagen((String) row[5]);
+			productoDTO.setDescripcion((String) row[6]);
+			productoDTO.setNombreUsuario((String) row[7]);
+			productoDTO.setEmailUsuario((String) row[8]);
+			productoDTO.setImagenUsuario((String) row[9]);
+       }
+		return  productoDTO;
 	}
 
 	@Override
@@ -89,13 +99,21 @@ public class ProductoServiceImpl implements IProductoServicio{
 	
 	@Override
 	public ProductoDTO encontrarProductoPorNombre(String nombre) {
-		Producto producto = productoRepository.buscarProductoPorNombre(nombre);
-		if (producto == null) {
-			return null;
-		} else {
-			return GenericMapper.map(producto, ProductoDTO.class);
-
-		}
+		List<Object[]> producto = productoRepository.getProductoYUsuarioPorNombre(nombre);
+		 ProductoDTO productoDTO = new ProductoDTO();
+		for (Object[] row : producto) {
+			productoDTO.setId((Long) row[0]);
+			productoDTO.setNombre((String) row[1]);
+			productoDTO.setPrecio((Double) row[2]);
+			productoDTO.setGenero((String) row[3]);
+			productoDTO.setCategoria((String) row[4]);
+			productoDTO.setImagen((String) row[5]);
+			productoDTO.setDescripcion((String) row[6]);
+			productoDTO.setNombreUsuario((String) row[7]);
+			productoDTO.setEmailUsuario((String) row[8]);
+			productoDTO.setImagenUsuario((String) row[9]);
+      }
+		return  productoDTO;
 	}
 
 
