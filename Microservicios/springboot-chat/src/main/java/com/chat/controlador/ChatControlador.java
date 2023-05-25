@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +37,13 @@ public class ChatControlador {
 		return chat != null ? ResponseEntity.ok(chat) : ResponseEntity.notFound().build();
 
 	}
+	
+	@GetMapping("/recuperar-chats-vendedor/{vendedor}")
+	public ResponseEntity<List<ChatDTO>> getChatPorCompradorYVendedor(@PathVariable String vendedor) {
+		List<ChatDTO> listaChats = charServicio.obtenerChatVendedorMensajesYUsuarios(vendedor);
+		return listaChats != null ? ResponseEntity.ok(listaChats) : ResponseEntity.notFound().build();
+
+	}
 
 	@PostMapping("/crear-chat")
 	public ResponseEntity<ChatDTO> crearChat(@RequestBody ChatDTO chatDTO) {
@@ -52,5 +61,16 @@ public class ChatControlador {
 	public ResponseEntity<List<MensajeDTO>> getMensajesPorChat(@PathVariable Long chatId){
 		List<MensajeDTO> mensajesChat = mensajeServicio.getMensajesChat(chatId);
 		return mensajesChat != null ? ResponseEntity.ok(mensajesChat) : ResponseEntity.notFound().build();
+	}
+	
+	@MessageMapping("/mensaje")
+	@SendTo("/chat/mensaje") 
+	public MensajeDTO recibeMensaje(MensajeDTO mensaje) {
+		MensajeDTO mensajeRecibido = new MensajeDTO();
+		mensajeRecibido.setId(mensaje.getId());
+		mensajeRecibido.setContenido(mensaje.getContenido());
+		mensajeRecibido.setUsuarioAutor(mensaje.getUsuarioAutor());
+		mensajeRecibido.setChat_id(mensaje.getChat_id());
+		return mensajeRecibido;
 	}
 }

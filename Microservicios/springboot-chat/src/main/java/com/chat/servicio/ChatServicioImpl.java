@@ -52,5 +52,26 @@ public class ChatServicioImpl implements IChatServicio{
 			return null;
 		}
 	}
+	
+	@Override
+	public List<ChatDTO> obtenerChatVendedorMensajesYUsuarios(String nombre_usuario_vendedor) {
+		final List<Chat> listaChats = chatRepositorio.chatByVendedor(nombre_usuario_vendedor);
+		if (listaChats != null) {
+			List<ChatDTO> listaDTO = listaChats.stream().map(chat -> GenericMapper.map(chat,ChatDTO.class)).collect(Collectors.toList());
+			for (ChatDTO chat : listaDTO) {
+				List<Mensaje> mensajes = mensajeRepositorio.getMensajesPorChat(chat.getId());
+				if(mensajes != null && !mensajes.isEmpty() ) {
+					List<MensajeDTO> listaMensajesDTO = mensajes.stream()
+							.map(mensaje -> GenericMapper.map(mensaje, MensajeDTO.class))
+							.collect(Collectors.toList());
+					chat.setMensajes(listaMensajesDTO);
+				}
+				
+			}
+			return listaDTO;
+		} else {
+			return null;
+		}
+	}
 
 }
