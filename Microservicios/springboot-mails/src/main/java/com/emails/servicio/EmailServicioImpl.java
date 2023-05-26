@@ -30,43 +30,54 @@ public class EmailServicioImpl implements IEmailServicio{
 	
 	@Override
 	public boolean enviarEmailRegistro(UsuarioDTO usuarioDTO) {
-		if (isValidEmailAddress(usuarioDTO.getEmail())) {
-			//UsuarioDTO usuario = clienteRest.getForObject(REGISTRO_ROUTE, UsuarioDTO.class);
-			Email email = emailRepositorio.buscarEmailPorTipo("registro");
-			String cuerpoEmail = email.getCuerpo().replace("<EMAIL>", usuarioDTO.getEmail());
-			cuerpoEmail = cuerpoEmail.replace("<NOMBRE>", usuarioDTO.getNombre());
+		boolean esValido = false;
+		try {
+			if (isValidEmailAddress(usuarioDTO.getEmail())) {
+				Email email = emailRepositorio.buscarEmailPorTipo("registro");
+				String cuerpoEmail = email.getCuerpo().replace("<EMAIL>", usuarioDTO.getEmail());
+				cuerpoEmail = cuerpoEmail.replace("<NOMBRE>", usuarioDTO.getNombre());
 
-			SimpleMailMessage message = new SimpleMailMessage();
-			message.setTo(usuarioDTO.getEmail());
-			message.setSubject(email.getAsunto());
-			message.setText(cuerpoEmail);
-			emailSender.send(message);
-			return true;
-		} else {
-			return false;
+				SimpleMailMessage message = new SimpleMailMessage();
+				message.setTo(usuarioDTO.getEmail());
+				message.setSubject(email.getAsunto());
+				message.setText(cuerpoEmail);
+				emailSender.send(message);
+				esValido = true;
+			} else {
+				esValido = false;
+			} 
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return esValido;
 	}
 	
 	@Override
 	public boolean enviarEmailRestablecerPassword(UsuarioDTO usuarioDTO) {
-		if (isValidEmailAddress(usuarioDTO.getEmail())) {
-			Email email = emailRepositorio.buscarEmailPorTipo("restablecer");
-			String cuerpoEmail = email.getCuerpo();
-			cuerpoEmail = cuerpoEmail.replace("<nombre>", usuarioDTO.getNombre());
-			TokenAutenticarDTO token = TokenUtils.generateToken(usuarioDTO.getId());
-			clienteToken.guardarToken(token);
-			String url = "http://localhost:4200/cambiar-password?token=";
-			url += token.getToken();
-			cuerpoEmail = cuerpoEmail.replace("<url>", url);
-			SimpleMailMessage message = new SimpleMailMessage();
-			message.setTo(usuarioDTO.getEmail());
-			message.setSubject(email.getAsunto());
-			message.setText(cuerpoEmail);
-			emailSender.send(message);
-			return true;
-		} else {
-			return false;
+		boolean esValido = false;
+		try {
+			if (isValidEmailAddress(usuarioDTO.getEmail())) {
+				Email email = emailRepositorio.buscarEmailPorTipo("restablecer");
+				String cuerpoEmail = email.getCuerpo();
+				cuerpoEmail = cuerpoEmail.replace("<nombre>", usuarioDTO.getNombre());
+				TokenAutenticarDTO token = TokenUtils.generateToken(usuarioDTO.getId());
+				clienteToken.guardarToken(token);
+				String url = "http://localhost:4200/cambiar-password?token=";
+				url += token.getToken();
+				cuerpoEmail = cuerpoEmail.replace("<url>", url);
+				SimpleMailMessage message = new SimpleMailMessage();
+				message.setTo(usuarioDTO.getEmail());
+				message.setSubject(email.getAsunto());
+				message.setText(cuerpoEmail);
+				emailSender.send(message);
+				esValido = true;
+			} else {
+				esValido = false;
+			} 
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return esValido;
 	}
 	
 	public static boolean isValidEmailAddress(String email) {

@@ -17,16 +17,23 @@ public class TokenServicioImpl implements ITokenServicio{
 	
 	@Override
 	public void guardarToken(TokenAutenticarDTO tokenAutenticarDTO) {
-		tokenRepositorio.save(GenericMapper.map(tokenAutenticarDTO, TokenAutenticar.class));
+		try {
+			tokenRepositorio.save(GenericMapper.map(tokenAutenticarDTO, TokenAutenticar.class));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
 	@Override
 	public void eliminarToken(Long id) {
-		if (tokenRepositorio.existsById(id)) {
-			tokenRepositorio.deleteById(id);
+		try {
+			if (tokenRepositorio.existsById(id)) {
+				tokenRepositorio.deleteById(id);
+			} 
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
 	}
 
 }

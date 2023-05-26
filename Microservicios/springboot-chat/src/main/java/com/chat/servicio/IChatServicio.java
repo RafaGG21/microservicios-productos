@@ -12,4 +12,6 @@ public interface IChatServicio {
 	public ChatDTO obtenerChatMensajesYUsuarios(String nombreUsuarioComprador, String nombreUsuarioVendedor);
 
 	public List<ChatDTO> obtenerChatVendedorMensajesYUsuarios(String nombre_usuario_vendedor);
+
+	public ChatDTO verChatPorId(Long id);
 }

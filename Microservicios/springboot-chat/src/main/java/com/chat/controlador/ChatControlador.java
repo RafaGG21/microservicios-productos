@@ -30,6 +30,13 @@ public class ChatControlador {
 	@Autowired
 	private IMensajeServicio mensajeServicio;
 	
+	@GetMapping("/ver-chat/{id}")
+	public ResponseEntity<ChatDTO> getChatPorId(@PathVariable Long id) {
+		ChatDTO chat = charServicio.verChatPorId(id);
+		return chat != null ? ResponseEntity.ok(chat) : ResponseEntity.notFound().build();
+
+	}
+	
 	@GetMapping("/ver-chat/{comprador}/{vendedor}")
 	public ResponseEntity<ChatDTO> getChatPorCompradorYVendedor(@PathVariable String comprador,
 			@PathVariable String vendedor) {

@@ -28,50 +28,77 @@ public class ChatServicioImpl implements IChatServicio{
 	
 	@Override
 	public  ChatDTO  crearChar(ChatDTO chatDTO) {
-		 Chat chat = GenericMapper.map(chatDTO, Chat.class);
-		 chat.setListaMensajes(new ArrayList<>());
-		 chat.setFechaCreacion(new Date());
-		 Chat chatGuardado = chatRepositorio.save(chat);
-		 return  GenericMapper.map(chatGuardado, ChatDTO.class);
+		ChatDTO chatDTORetornar = null;
+		 try {
+			Chat chat = GenericMapper.map(chatDTO, Chat.class);
+			chat.setListaMensajes(new ArrayList<>());
+			chat.setFechaCreacion(new Date());
+			Chat chatGuardado = chatRepositorio.save(chat);
+			chatDTORetornar = GenericMapper.map(chatGuardado, ChatDTO.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		 return chatDTORetornar;
 	}
 
 	@Override
 	public ChatDTO obtenerChatMensajesYUsuarios(String nombre_usuario_comprador, String nombre_usuario_vendedor) {
-		final Chat chat = chatRepositorio.chatByCompradorAndVendedor(nombre_usuario_comprador, nombre_usuario_vendedor);
-		if (chat != null) {
-			ChatDTO chatDTO = GenericMapper.map(chat,ChatDTO.class);
-			List<Mensaje> mensajes = mensajeRepositorio.getMensajesPorChat(chatDTO.getId());
-			if(mensajes != null && !mensajes.isEmpty() ) {
-				List<MensajeDTO> listaMensajesDTO = mensajes.stream()
-						.map(mensaje -> GenericMapper.map(mensaje, MensajeDTO.class))
-						.collect(Collectors.toList());
-				chatDTO.setMensajes(listaMensajesDTO);
-			}
-			return chatDTO;
-		} else {
-			return null;
+		ChatDTO chatDTO = null; 
+		try {
+			final Chat chat = chatRepositorio.chatByCompradorAndVendedor(nombre_usuario_comprador,
+					nombre_usuario_vendedor);
+			if (chat != null) {
+				chatDTO = GenericMapper.map(chat, ChatDTO.class);
+				List<Mensaje> mensajes = mensajeRepositorio.getMensajesPorChat(chatDTO.getId());
+				if (mensajes != null && !mensajes.isEmpty()) {
+					List<MensajeDTO> listaMensajesDTO = mensajes.stream()
+							.map(mensaje -> GenericMapper.map(mensaje, MensajeDTO.class)).collect(Collectors.toList());
+					chatDTO.setMensajes(listaMensajesDTO);
+				}
+			} else {
+				return null;
+			} 
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return chatDTO;
 	}
 	
 	@Override
 	public List<ChatDTO> obtenerChatVendedorMensajesYUsuarios(String nombre_usuario_vendedor) {
-		final List<Chat> listaChats = chatRepositorio.chatByVendedor(nombre_usuario_vendedor);
-		if (listaChats != null) {
-			List<ChatDTO> listaDTO = listaChats.stream().map(chat -> GenericMapper.map(chat,ChatDTO.class)).collect(Collectors.toList());
-			for (ChatDTO chat : listaDTO) {
-				List<Mensaje> mensajes = mensajeRepositorio.getMensajesPorChat(chat.getId());
-				if(mensajes != null && !mensajes.isEmpty() ) {
-					List<MensajeDTO> listaMensajesDTO = mensajes.stream()
-							.map(mensaje -> GenericMapper.map(mensaje, MensajeDTO.class))
-							.collect(Collectors.toList());
-					chat.setMensajes(listaMensajesDTO);
+		List<ChatDTO> listaDTO = null;
+		try {
+			final List<Chat> listaChats = chatRepositorio.chatByVendedor(nombre_usuario_vendedor);
+			if (listaChats != null) {
+				listaDTO = listaChats.stream().map(chat -> GenericMapper.map(chat, ChatDTO.class))
+						.collect(Collectors.toList());
+				for (ChatDTO chat : listaDTO) {
+					List<Mensaje> mensajes = mensajeRepositorio.getMensajesPorChat(chat.getId());
+					if (mensajes != null && !mensajes.isEmpty()) {
+						List<MensajeDTO> listaMensajesDTO = mensajes.stream()
+								.map(mensaje -> GenericMapper.map(mensaje, MensajeDTO.class))
+								.collect(Collectors.toList());
+						chat.setMensajes(listaMensajesDTO);
+					}
 				}
 				
-			}
-			return listaDTO;
-		} else {
-			return null;
+			} else {
+				return null;
+			} 
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return listaDTO;
 	}
 
+	@Override
+	public ChatDTO verChatPorId(Long id) {
+		ChatDTO chatDTO = null;
+		try {
+			chatDTO = GenericMapper.map(chatRepositorio.findById(id).orElse(null), ChatDTO.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return chatDTO;
+	}
 }
