@@ -21,7 +21,7 @@ import com.commons.dto.MensajeDTO;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 public class ChatControlador {
 
 	@Autowired
@@ -70,8 +70,6 @@ public class ChatControlador {
 		return mensajesChat != null ? ResponseEntity.ok(mensajesChat) : ResponseEntity.notFound().build();
 	}
 	
-	@MessageMapping("/mensaje")
-	@SendTo("/chat/mensaje") 
 	public MensajeDTO recibeMensaje(MensajeDTO mensaje) {
 		MensajeDTO mensajeRecibido = new MensajeDTO();
 		mensajeRecibido.setId(mensaje.getId());
@@ -79,5 +77,11 @@ public class ChatControlador {
 		mensajeRecibido.setUsuarioAutor(mensaje.getUsuarioAutor());
 		mensajeRecibido.setChat_id(mensaje.getChat_id());
 		return mensajeRecibido;
+	}
+	
+	@MessageMapping("/chat")
+	@SendTo("/topic/messages")
+	public MensajeDTO send (MensajeDTO message) throws Exception {
+		return message;
 	}
 }
