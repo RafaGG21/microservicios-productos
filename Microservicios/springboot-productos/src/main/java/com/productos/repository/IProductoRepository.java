@@ -25,7 +25,7 @@ public interface IProductoRepository extends CrudRepository<Producto, Long>{
 	public Producto buscarProductoPorNombre(String nombre);
 	
 	@Query(value = "SELECT * FROM productos WHERE idUsuario = ?1", nativeQuery = true)
-	public Producto buscarProductoPorUsuario(Long idUsuario);
+	public List<Producto> buscarProductosPorUsuario(Long idUsuario);
 	
 	 @Query("SELECT p.id, p.nombre, p.precio, p.genero, p.categoria, p.imagen, p.descripcion, u.nombre, u.email, u.imagen FROM Producto p JOIN p.usuario u  ON p.usuario.id = u.id where p.id = :id")
 	 public List<Object[]> getProductoYUsuarioPorId(@Param("id") Long id);

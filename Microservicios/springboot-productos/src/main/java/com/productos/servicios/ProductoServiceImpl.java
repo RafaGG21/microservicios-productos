@@ -159,5 +159,21 @@ public class ProductoServiceImpl implements IProductoServicio{
 		return  productoDTO;
 	}
 
-
+	@Override	
+	public List<ProductoDTO> encontrarProductosUsuario(Long idUsuario) {
+		List<ProductoDTO> productosDTO = null;
+		try {
+			List<Producto> producto = productoRepository.buscarProductosPorUsuario(idUsuario);
+			if (producto == null) {
+				return null;
+			} else {
+				productosDTO = producto.stream()
+						.map(p -> GenericMapper.map(p, ProductoDTO.class))
+						.collect(Collectors.toList());
+			} 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return productosDTO;
+	}
 }

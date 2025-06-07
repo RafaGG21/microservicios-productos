@@ -80,4 +80,15 @@ public class ProductoControlador {
 			return ResponseEntity.ok().body(productos);
 		}
     }
+	
+	@GetMapping("/por-usuario/{idUsuario}")
+	public ResponseEntity<List<ProductoDTO>> getProductosPorUsuario(@PathVariable Long idUsuario) {
+	    List<ProductoDTO> productos = productoServicio.encontrarProductosUsuario(idUsuario);
+	    if(productos.isEmpty()) {
+	        return ResponseEntity.notFound().build();
+	    } else {
+	        return ResponseEntity.ok(productos);
+	    }
+	}
+
 }

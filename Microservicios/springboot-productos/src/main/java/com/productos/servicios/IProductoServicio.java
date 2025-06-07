@@ -23,4 +23,8 @@ public interface IProductoServicio {
 	public List<ProductoDTO> encontrarProductoPorCategoria(String categoria);
 
 	public ProductoDTO encontrarProductoPorNombre(String nombre);
+
+	public List<ProductoDTO> encontrarProductosUsuario(Long idUsuario);
+
+	
 }
